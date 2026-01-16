@@ -11,6 +11,9 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
+    "build:dashboard": "turbo build --filter=@imgfast/dashboard",
+    "build:api": "turbo build --filter=@imgfast/api",
+    "build:edge": "turbo build --filter=@imgfast/edge-worker",
     "lint": "turbo lint",
     "test": "turbo test",
     "typecheck": "turbo typecheck",
