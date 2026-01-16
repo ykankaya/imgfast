@@ -1,14 +1,14 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
-    "name": "imagecdn/optimized-image",
+    "name": "imgfast/optimized-image",
     "version": "1.0.0",
-    "title": "ImageCDN Image",
+    "title": "Imgfast Image",
     "category": "media",
     "icon": "format-image",
-    "description": "Display an optimized image via ImageCDN with transformation options.",
+    "description": "Display an optimized image via Imgfast with transformation options.",
     "keywords": ["image", "cdn", "optimize", "webp", "responsive"],
-    "textdomain": "imagecdn-optimizer",
+    "textdomain": "imgfast-optimizer",
     "attributes": {
         "id": {
             "type": "number"

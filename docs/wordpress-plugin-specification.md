@@ -518,8 +518,8 @@ ImageCDN Settings
 | Field | Type | Validation | Default |
 |-------|------|------------|---------|
 | `enabled` | checkbox | boolean | `false` |
-| `public_key` | text | `imgcdn_pk_[a-zA-Z0-9]{8,64}` | `''` |
-| `secret_key` | password | `imgcdn_sk_[a-zA-Z0-9]{16,64}` | `''` |
+| `public_key` | text | `imgfast_pk_[a-zA-Z0-9]{8,64}` | `''` |
+| `secret_key` | password | `imgfast_sk_[a-zA-Z0-9]{16,64}` | `''` |
 | `cdn_url` | url | valid URL, https | `https://cdn.imagecdn.io` |
 | `mode` | select | enum | `media_only` |
 | `default_quality` | range | 1-100, integer | `80` |
@@ -668,7 +668,7 @@ class ImageCDN_Admin {
         
         validateApiKey(e) {
             const value = $(e.target).val().trim();
-            const pattern = /^imgcdn_pk_[a-zA-Z0-9]{8,64}$/;
+            const pattern = /^imgfast_pk_[a-zA-Z0-9]{8,64}$/;
             
             if (value && !pattern.test(value)) {
                 $(e.target).addClass('error');
@@ -1241,7 +1241,7 @@ public function sanitize_public_key(string $key): string {
     $key = trim($key);
     
     // Validate format
-    if (!preg_match('/^imgcdn_pk_[a-zA-Z0-9]{8,64}$/', $key)) {
+    if (!preg_match('/^imgfast_pk_[a-zA-Z0-9]{8,64}$/', $key)) {
         return '';
     }
     
@@ -1832,8 +1832,8 @@ class ImageCDN_Rewriter {
 
 | Field | Error | Resolution |
 |-------|-------|------------|
-| `public_key` | Invalid format | Must be `imgcdn_pk_*` |
-| `secret_key` | Invalid format | Must be `imgcdn_sk_*` |
+| `public_key` | Invalid format | Must be `imgfast_pk_*` |
+| `secret_key` | Invalid format | Must be `imgfast_sk_*` |
 | `cdn_url` | Invalid URL | Must be valid HTTPS URL |
 | `quality` | Out of range | Must be 1-100 |
 

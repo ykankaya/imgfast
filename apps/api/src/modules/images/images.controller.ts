@@ -18,7 +18,7 @@ export class ImagesController {
     @Body() body: { filename: string; contentType: string }
   ) {
     // In production, get publicKey from customer record
-    const publicKey = user.publicKey || 'imgcdn_pk_demo';
+    const publicKey = user.publicKey || 'imgfast_pk_demo';
     return this.imagesService.getUploadUrl(publicKey, body.filename, body.contentType);
   }
 
@@ -30,7 +30,7 @@ export class ImagesController {
     @Query('limit') limit?: number,
     @Query('token') token?: string
   ) {
-    const publicKey = user.publicKey || 'imgcdn_pk_demo';
+    const publicKey = user.publicKey || 'imgfast_pk_demo';
     return this.imagesService.listImages(publicKey, {
       prefix,
       maxKeys: limit,
@@ -41,7 +41,7 @@ export class ImagesController {
   @Delete(':imagePath')
   @ApiOperation({ summary: 'Delete an image' })
   async deleteImage(@CurrentUser() user: any, @Param('imagePath') imagePath: string) {
-    const publicKey = user.publicKey || 'imgcdn_pk_demo';
+    const publicKey = user.publicKey || 'imgfast_pk_demo';
     await this.imagesService.deleteImage(publicKey, imagePath);
     return { success: true };
   }
@@ -53,7 +53,7 @@ export class ImagesController {
     @Param('imagePath') imagePath: string,
     @Query() params: Record<string, string>
   ) {
-    const publicKey = user.publicKey || 'imgcdn_pk_demo';
+    const publicKey = user.publicKey || 'imgfast_pk_demo';
     const { path, ...transformParams } = params;
     return {
       url: this.imagesService.getCdnUrl(publicKey, imagePath, transformParams),

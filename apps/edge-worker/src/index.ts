@@ -65,7 +65,7 @@ export default {
           {},
           {
             documentation: 'https://docs.imagecdn.io/url-format',
-            example: '/imgcdn_pk_xxxx/images/photo.jpg?w=800&q=80',
+            example: '/imgfast_pk_xxxx/images/photo.jpg?w=800&q=80',
           }
         );
       }

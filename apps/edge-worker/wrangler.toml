@@ -1,4 +1,4 @@
-name = "imagecdn-edge"
+name = "imgfast-edge"
 main = "src/index.ts"
 compatibility_date = "2024-12-01"
 compatibility_flags = ["nodejs_compat"]
@@ -9,7 +9,7 @@ vars = { ENVIRONMENT = "development", MAX_IMAGE_WIDTH = "4096", MAX_IMAGE_HEIGHT
 
 [[env.development.r2_buckets]]
 binding = "IMAGES_BUCKET"
-bucket_name = "imagecdn-images-preview"
+bucket_name = "imgfast-images-preview"
 
 [[env.development.kv_namespaces]]
 binding = "CACHE_KV"
@@ -17,28 +17,28 @@ id = "dev-kv-namespace-id"
 
 [[env.development.d1_databases]]
 binding = "USAGE_DB"
-database_name = "imagecdn-usage"
+database_name = "imgfast-usage"
 database_id = "dev-d1-database-id"
 
 # Staging
 [env.staging]
 vars = { ENVIRONMENT = "staging" }
 routes = [
-  { pattern = "staging-cdn.example.com/*", zone_name = "example.com" }
+  { pattern = "staging-cdn.imgfast.io/*", zone_name = "imgfast.io" }
 ]
 
 # Production
 [env.production]
 vars = { ENVIRONMENT = "production" }
 routes = [
-  { pattern = "cdn.example.com/*", zone_name = "example.com" }
+  { pattern = "cdn.imgfast.io/*", zone_name = "imgfast.io" }
 ]
 
 # R2 Bucket bindings
 [[r2_buckets]]
 binding = "IMAGES_BUCKET"
-bucket_name = "imagecdn-images"
-preview_bucket_name = "imagecdn-images-preview"
+bucket_name = "imgfast-images"
+preview_bucket_name = "imgfast-images-preview"
 
 # KV Namespace for caching metadata and rate limiting
 [[kv_namespaces]]
@@ -49,7 +49,7 @@ preview_id = "your-preview-kv-namespace-id"
 # D1 Database for usage tracking (async)
 [[d1_databases]]
 binding = "USAGE_DB"
-database_name = "imagecdn-usage"
+database_name = "imgfast-usage"
 database_id = "your-d1-database-id"
 
 # Analytics Engine for real-time metrics

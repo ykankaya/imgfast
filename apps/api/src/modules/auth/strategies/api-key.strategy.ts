@@ -18,14 +18,14 @@ export class ApiKeyStrategy extends PassportStrategy(Strategy, 'api-key') {
     // In production, look up the API key in database
     // and return the associated customer
 
-    if (!apiKey.startsWith('imgcdn_sk_')) {
+    if (!apiKey.startsWith('imgfast_sk_')) {
       throw new UnauthorizedException('Invalid API key format');
     }
 
     // Placeholder: return mock customer
     return {
       customerId: 'customer-from-api-key',
-      publicKey: 'imgcdn_pk_mock',
+      publicKey: 'imgfast_pk_mock',
     };
   }
 }

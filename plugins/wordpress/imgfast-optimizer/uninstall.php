@@ -1,10 +1,10 @@
 <?php
 /**
- * ImageCDN Optimizer Uninstall
+ * Imgfast Optimizer Uninstall
  *
  * Fired when the plugin is deleted.
  *
- * @package ImageCDN
+ * @package Imgfast
  */
 
 // Exit if not called by WordPress
@@ -15,21 +15,21 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 /**
  * Clean up plugin data on uninstall
  */
-function imagecdn_uninstall() {
+function imgfast_uninstall() {
     // Delete plugin options
-    delete_option('imagecdn_settings');
+    delete_option('imgfast_settings');
 
     // Delete any transients
-    delete_transient('imagecdn_stats');
-    delete_transient('imagecdn_connection_status');
+    delete_transient('imgfast_stats');
+    delete_transient('imgfast_connection_status');
 
     // Clean up user meta if any
-    delete_metadata('user', 0, 'imagecdn_dismissed_notices', '', true);
+    delete_metadata('user', 0, 'imgfast_dismissed_notices', '', true);
 
     // Remove any scheduled events
-    $timestamp = wp_next_scheduled('imagecdn_daily_stats');
+    $timestamp = wp_next_scheduled('imgfast_daily_stats');
     if ($timestamp) {
-        wp_unschedule_event($timestamp, 'imagecdn_daily_stats');
+        wp_unschedule_event($timestamp, 'imgfast_daily_stats');
     }
 
     // For multisite, clean up each site
@@ -39,13 +39,13 @@ function imagecdn_uninstall() {
         foreach ($sites as $site_id) {
             switch_to_blog($site_id);
 
-            delete_option('imagecdn_settings');
-            delete_transient('imagecdn_stats');
-            delete_transient('imagecdn_connection_status');
+            delete_option('imgfast_settings');
+            delete_transient('imgfast_stats');
+            delete_transient('imgfast_connection_status');
 
             restore_current_blog();
         }
     }
 }
 
-imagecdn_uninstall();
+imgfast_uninstall();

@@ -48,20 +48,20 @@ export class AuthService {
 
   /**
    * Generate a URL-safe public key.
-   * Format: imgcdn_pk_[12 chars]
+   * Format: imgfast_pk_[12 chars]
    */
   private generatePublicKey(): string {
     const randomPart = crypto.randomBytes(9).toString('base64url').slice(0, 12);
-    return `imgcdn_pk_${randomPart}`;
+    return `imgfast_pk_${randomPart}`;
   }
 
   /**
    * Generate a secure secret key.
-   * Format: imgcdn_sk_[32 chars]
+   * Format: imgfast_sk_[32 chars]
    */
   private generateSecretKey(): string {
     const randomPart = crypto.randomBytes(24).toString('base64url').slice(0, 32);
-    return `imgcdn_sk_${randomPart}`;
+    return `imgfast_sk_${randomPart}`;
   }
 
   /**

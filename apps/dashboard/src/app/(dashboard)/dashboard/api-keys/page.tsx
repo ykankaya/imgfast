@@ -18,16 +18,16 @@ export default function ApiKeysPage() {
     {
       id: '1',
       name: 'Production',
-      publicKey: 'imgcdn_pk_abc123xyz789',
-      secretKeyPreview: 'imgcdn_sk_****************************',
+      publicKey: 'imgfast_pk_abc123xyz789',
+      secretKeyPreview: 'imgfast_sk_****************************',
       createdAt: '2024-01-15',
       lastUsed: '2 hours ago',
     },
     {
       id: '2',
       name: 'Development',
-      publicKey: 'imgcdn_pk_dev456test',
-      secretKeyPreview: 'imgcdn_sk_****************************',
+      publicKey: 'imgfast_pk_dev456test',
+      secretKeyPreview: 'imgfast_sk_****************************',
       createdAt: '2024-01-10',
       lastUsed: '5 days ago',
     },
@@ -96,7 +96,7 @@ export default function ApiKeysPage() {
                   <td className="py-4">
                     <div className="flex items-center space-x-2">
                       <code className="text-sm bg-gray-100 px-2 py-1 rounded">
-                        {showSecret === key.id ? 'imgcdn_sk_realkey...' : key.secretKeyPreview}
+                        {showSecret === key.id ? 'imgfast_sk_realkey...' : key.secretKeyPreview}
                       </code>
                       <button
                         onClick={() => setShowSecret(showSecret === key.id ? null : key.id)}

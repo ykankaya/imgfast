@@ -1,8 +1,8 @@
 <?php
 /**
- * ImageCDN Gutenberg Blocks Handler
+ * Imgfast Gutenberg Blocks Handler
  *
- * @package ImageCDN
+ * @package Imgfast
  */
 
 // Prevent direct access
@@ -13,21 +13,21 @@ if (!defined('ABSPATH')) {
 /**
  * Handles Gutenberg block registration and rendering
  */
-class ImageCDN_Blocks {
+class Imgfast_Blocks {
 
     /**
      * Settings instance
      *
-     * @var ImageCDN_Settings
+     * @var Imgfast_Settings
      */
     private $settings;
 
     /**
      * Constructor
      *
-     * @param ImageCDN_Settings $settings Settings instance
+     * @param Imgfast_Settings $settings Settings instance
      */
-    public function __construct(ImageCDN_Settings $settings) {
+    public function __construct(Imgfast_Settings $settings) {
         $this->settings = $settings;
     }
 
@@ -37,7 +37,7 @@ class ImageCDN_Blocks {
     public function init() {
         add_action('init', [$this, 'register_blocks']);
         add_action('enqueue_block_editor_assets', [$this, 'enqueue_editor_assets']);
-        add_filter('render_block_imagecdn/optimized-image', [$this, 'render_block'], 10, 2);
+        add_filter('render_block_imgfast/optimized-image', [$this, 'render_block'], 10, 2);
     }
 
     /**
@@ -50,7 +50,7 @@ class ImageCDN_Blocks {
         }
 
         register_block_type(
-            IMAGECDN_PLUGIN_DIR . 'blocks/imagecdn-image',
+            IMGFAST_PLUGIN_DIR . 'blocks/imgfast-image',
             [
                 'render_callback' => [$this, 'render_block'],
             ]
@@ -63,8 +63,8 @@ class ImageCDN_Blocks {
     public function enqueue_editor_assets() {
         // Pass configuration to block editor
         wp_localize_script(
-            'imagecdn-optimized-image-editor-script',
-            'imagecdnBlock',
+            'imgfast-optimized-image-editor-script',
+            'imgfastBlock',
             [
                 'enabled' => $this->settings->is_enabled(),
                 'cdnBase' => $this->settings->get_cdn_base_url(),
@@ -107,7 +107,7 @@ class ImageCDN_Blocks {
         ];
 
         // Create rewriter instance
-        $rewriter = new ImageCDN_Rewriter($this->settings);
+        $rewriter = new Imgfast_Rewriter($this->settings);
 
         // Build CDN URL
         $cdn_url = $rewriter->build_cdn_url($url, $params);
@@ -118,7 +118,7 @@ class ImageCDN_Blocks {
         $align = $attrs['align'] ?? '';
 
         // Build class names
-        $class_names = ['wp-block-imagecdn-optimized-image'];
+        $class_names = ['wp-block-imgfast-optimized-image'];
         if ($align) {
             $class_names[] = 'align' . $align;
         }
@@ -175,7 +175,7 @@ class ImageCDN_Blocks {
      *
      * @param string              $url      Original image URL
      * @param array               $params   Transform params
-     * @param ImageCDN_Rewriter   $rewriter Rewriter instance
+     * @param Imgfast_Rewriter   $rewriter Rewriter instance
      * @return string|null
      */
     private function build_srcset($url, $params, $rewriter) {

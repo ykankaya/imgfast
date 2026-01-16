@@ -4,15 +4,15 @@ import { createHash, randomBytes, timingSafeEqual } from 'crypto';
  * API Key Generation and Management Utilities
  *
  * Key formats:
- * - Public Key: imgcdn_pk_{base62_22chars}
- * - Secret Key: imgcdn_sk_{base62_32chars}
+ * - Public Key: imgfast_pk_{base62_22chars}
+ * - Secret Key: imgfast_sk_{base62_32chars}
  *
  * Public keys are used in URLs and can be safely exposed.
  * Secret keys are used for API authentication and signing.
  */
 
-const PUBLIC_KEY_PREFIX = 'imgcdn_pk_';
-const SECRET_KEY_PREFIX = 'imgcdn_sk_';
+const PUBLIC_KEY_PREFIX = 'imgfast_pk_';
+const SECRET_KEY_PREFIX = 'imgfast_sk_';
 const BASE62_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
 /**

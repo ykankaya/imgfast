@@ -1,15 +1,17 @@
-# ImageCDN - Project Context for AI Assistants
+# Imgfast - Project Context for AI Assistants
 
 ## Project Overview
 
-ImageCDN is a subscription-based, global CDN and image optimization SaaS platform similar to Cloudinary, ImageKit, imgix, or Bunny Optimizer.
+Imgfast is a subscription-based, global CDN and image optimization SaaS platform similar to Cloudinary, ImageKit, imgix, or Bunny Optimizer.
+
+**Domain:** imgfast.io
 
 ## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                         Client Request                           │
-│                  cdn.imagecdn.io/{pk}/image.jpg?w=800           │
+│                  cdn.imgfast.io/{pk}/image.jpg?w=800            │
 └───────────────────────────────┬─────────────────────────────────┘
                                 │
                                 ▼
@@ -37,7 +39,7 @@ ImageCDN is a subscription-based, global CDN and image optimization SaaS platfor
 ## Monorepo Structure
 
 ```
-imagecdn/
+imgfast/
 ├── apps/
 │   ├── edge-worker/     # Cloudflare Worker - Image transformation & CDN
 │   ├── api/             # NestJS Backend - Auth, Billing, Dashboard API
@@ -72,12 +74,12 @@ imagecdn/
 - Backend API only for dashboard operations
 
 ### 2. API Key Design
-- **Public Key** (`imgcdn_pk_xxx`): Used in CDN URLs, safe to expose
-- **Secret Key** (`imgcdn_sk_xxx`): Used for API auth, never expose
+- **Public Key** (`imgfast_pk_xxx`): Used in CDN URLs, safe to expose
+- **Secret Key** (`imgfast_sk_xxx`): Used for API auth, never expose
 
 ### 3. URL Structure
 ```
-https://cdn.imagecdn.io/{public_key}/{image_path}?w=800&q=80&f=webp
+https://cdn.imgfast.io/{public_key}/{image_path}?w=800&q=80&f=webp
 ```
 
 ### 4. Caching Strategy

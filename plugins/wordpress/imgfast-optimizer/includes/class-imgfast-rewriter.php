@@ -1,8 +1,8 @@
 <?php
 /**
- * ImageCDN URL Rewriter
+ * Imgfast URL Rewriter
  *
- * @package ImageCDN
+ * @package Imgfast
  */
 
 // Prevent direct access
@@ -11,14 +11,14 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Rewrites image URLs to use ImageCDN
+ * Rewrites image URLs to use Imgfast
  */
-class ImageCDN_Rewriter {
+class Imgfast_Rewriter {
 
     /**
      * Settings instance
      *
-     * @var ImageCDN_Settings
+     * @var Imgfast_Settings
      */
     private $settings;
 
@@ -46,9 +46,9 @@ class ImageCDN_Rewriter {
     /**
      * Constructor
      *
-     * @param ImageCDN_Settings $settings Settings instance
+     * @param Imgfast_Settings $settings Settings instance
      */
-    public function __construct(ImageCDN_Settings $settings) {
+    public function __construct(Imgfast_Settings $settings) {
         $this->settings = $settings;
         $this->site_url = site_url();
 
@@ -136,7 +136,7 @@ class ImageCDN_Rewriter {
         $img_tag = $matches[0];
 
         // Skip if already processed
-        if (strpos($img_tag, 'data-imagecdn-skip') !== false) {
+        if (strpos($img_tag, 'data-imgfast-skip') !== false) {
             return $img_tag;
         }
 
@@ -150,7 +150,7 @@ class ImageCDN_Rewriter {
                 $img_tag = str_replace($src_match[0], 'src="' . esc_url($cdn_url) . '"', $img_tag);
 
                 // Mark as processed
-                $img_tag = str_replace('<img', '<img data-imagecdn-original="' . esc_attr($original_url) . '"', $img_tag);
+                $img_tag = str_replace('<img', '<img data-imgfast-original="' . esc_attr($original_url) . '"', $img_tag);
             }
         }
 
@@ -246,7 +246,7 @@ class ImageCDN_Rewriter {
                 $params['height'] = $attr['height'];
             }
 
-            $attr['data-imagecdn-original'] = $attr['src'];
+            $attr['data-imgfast-original'] = $attr['src'];
             $attr['src'] = $this->build_cdn_url($attr['src'], $params);
         }
 

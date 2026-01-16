@@ -1,8 +1,8 @@
 <?php
 /**
- * ImageCDN Admin Interface
+ * Imgfast Admin Interface
  *
- * @package ImageCDN
+ * @package Imgfast
  */
 
 // Prevent direct access
@@ -13,21 +13,21 @@ if (!defined('ABSPATH')) {
 /**
  * Admin settings page and functionality
  */
-class ImageCDN_Admin {
+class Imgfast_Admin {
 
     /**
      * Settings instance
      *
-     * @var ImageCDN_Settings
+     * @var Imgfast_Settings
      */
     private $settings;
 
     /**
      * Constructor
      *
-     * @param ImageCDN_Settings $settings Settings instance
+     * @param Imgfast_Settings $settings Settings instance
      */
-    public function __construct(ImageCDN_Settings $settings) {
+    public function __construct(Imgfast_Settings $settings) {
         $this->settings = $settings;
 
         add_action('admin_menu', [$this, 'add_menu_page']);
@@ -35,9 +35,9 @@ class ImageCDN_Admin {
         add_action('admin_enqueue_scripts', [$this, 'enqueue_assets']);
 
         // AJAX handlers
-        add_action('wp_ajax_imagecdn_test_connection', [$this, 'ajax_test_connection']);
-        add_action('wp_ajax_imagecdn_clear_cache', [$this, 'ajax_clear_cache']);
-        add_action('wp_ajax_imagecdn_get_stats', [$this, 'ajax_get_stats']);
+        add_action('wp_ajax_imgfast_test_connection', [$this, 'ajax_test_connection']);
+        add_action('wp_ajax_imgfast_clear_cache', [$this, 'ajax_clear_cache']);
+        add_action('wp_ajax_imgfast_get_stats', [$this, 'ajax_get_stats']);
     }
 
     /**
@@ -45,10 +45,10 @@ class ImageCDN_Admin {
      */
     public function add_menu_page() {
         add_options_page(
-            __('ImageCDN Settings', 'imagecdn-optimizer'),
-            __('ImageCDN', 'imagecdn-optimizer'),
+            __('Imgfast Settings', 'imgfast-optimizer'),
+            __('Imgfast', 'imgfast-optimizer'),
             'manage_options',
-            'imagecdn-settings',
+            'imgfast-settings',
             [$this, 'render_settings_page']
         );
     }
@@ -58,8 +58,8 @@ class ImageCDN_Admin {
      */
     public function register_settings() {
         register_setting(
-            'imagecdn_settings',
-            ImageCDN_Settings::OPTION_KEY,
+            'imgfast_settings',
+            Imgfast_Settings::OPTION_KEY,
             [
                 'type' => 'array',
                 'sanitize_callback' => [$this, 'sanitize_settings'],
@@ -78,7 +78,7 @@ class ImageCDN_Admin {
 
         $sanitized['enabled'] = !empty($input['enabled']);
         $sanitized['public_key'] = sanitize_text_field($input['public_key'] ?? '');
-        $sanitized['cdn_url'] = esc_url_raw($input['cdn_url'] ?? 'https://cdn.imagecdn.io');
+        $sanitized['cdn_url'] = esc_url_raw($input['cdn_url'] ?? 'https://cdn.imgfast.io');
         $sanitized['default_quality'] = max(1, min(100, intval($input['default_quality'] ?? 80)));
         $sanitized['default_format'] = sanitize_text_field($input['default_format'] ?? 'auto');
         $sanitized['lazy_load'] = !empty($input['lazy_load']);
@@ -102,34 +102,34 @@ class ImageCDN_Admin {
      * @param string $hook Current admin page
      */
     public function enqueue_assets($hook) {
-        if ($hook !== 'settings_page_imagecdn-settings') {
+        if ($hook !== 'settings_page_imgfast-settings') {
             return;
         }
 
         wp_enqueue_style(
-            'imagecdn-admin',
-            IMAGECDN_PLUGIN_URL . 'admin/css/admin.css',
+            'imgfast-admin',
+            IMGFAST_PLUGIN_URL . 'admin/css/admin.css',
             [],
-            IMAGECDN_VERSION
+            IMGFAST_VERSION
         );
 
         wp_enqueue_script(
-            'imagecdn-admin',
-            IMAGECDN_PLUGIN_URL . 'admin/js/admin.js',
+            'imgfast-admin',
+            IMGFAST_PLUGIN_URL . 'admin/js/admin.js',
             ['jquery'],
-            IMAGECDN_VERSION,
+            IMGFAST_VERSION,
             true
         );
 
-        wp_localize_script('imagecdn-admin', 'imagecdnAdmin', [
+        wp_localize_script('imgfast-admin', 'imgfastAdmin', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('imagecdn_admin'),
+            'nonce' => wp_create_nonce('imgfast_admin'),
             'strings' => [
-                'testing' => __('Testing connection...', 'imagecdn-optimizer'),
-                'success' => __('Connection successful!', 'imagecdn-optimizer'),
-                'error' => __('Connection failed:', 'imagecdn-optimizer'),
-                'clearing' => __('Clearing cache...', 'imagecdn-optimizer'),
-                'cleared' => __('Cache cleared!', 'imagecdn-optimizer'),
+                'testing' => __('Testing connection...', 'imgfast-optimizer'),
+                'success' => __('Connection successful!', 'imgfast-optimizer'),
+                'error' => __('Connection failed:', 'imgfast-optimizer'),
+                'clearing' => __('Clearing cache...', 'imgfast-optimizer'),
+                'cleared' => __('Cache cleared!', 'imgfast-optimizer'),
             ],
         ]);
     }
@@ -144,7 +144,7 @@ class ImageCDN_Admin {
 
         $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'general';
         ?>
-        <div class="wrap imagecdn-settings">
+        <div class="wrap imgfast-settings">
             <h1>
                 <span class="dashicons dashicons-format-image"></span>
                 <?php echo esc_html(get_admin_page_title()); ?>
@@ -153,30 +153,30 @@ class ImageCDN_Admin {
             <?php if (!$this->settings->is_enabled()): ?>
             <div class="notice notice-warning">
                 <p>
-                    <?php _e('ImageCDN is not active. Enter your API key and enable the plugin to start optimizing images.', 'imagecdn-optimizer'); ?>
-                    <a href="https://imagecdn.io/signup" target="_blank"><?php _e('Get your free API key', 'imagecdn-optimizer'); ?></a>
+                    <?php _e('Imgfast is not active. Enter your API key and enable the plugin to start optimizing images.', 'imgfast-optimizer'); ?>
+                    <a href="https://imgfast.io/signup" target="_blank"><?php _e('Get your free API key', 'imgfast-optimizer'); ?></a>
                 </p>
             </div>
             <?php endif; ?>
 
             <nav class="nav-tab-wrapper">
-                <a href="?page=imagecdn-settings&tab=general"
+                <a href="?page=imgfast-settings&tab=general"
                    class="nav-tab <?php echo $active_tab === 'general' ? 'nav-tab-active' : ''; ?>">
-                    <?php _e('General', 'imagecdn-optimizer'); ?>
+                    <?php _e('General', 'imgfast-optimizer'); ?>
                 </a>
-                <a href="?page=imagecdn-settings&tab=advanced"
+                <a href="?page=imgfast-settings&tab=advanced"
                    class="nav-tab <?php echo $active_tab === 'advanced' ? 'nav-tab-active' : ''; ?>">
-                    <?php _e('Advanced', 'imagecdn-optimizer'); ?>
+                    <?php _e('Advanced', 'imgfast-optimizer'); ?>
                 </a>
-                <a href="?page=imagecdn-settings&tab=status"
+                <a href="?page=imgfast-settings&tab=status"
                    class="nav-tab <?php echo $active_tab === 'status' ? 'nav-tab-active' : ''; ?>">
-                    <?php _e('Status', 'imagecdn-optimizer'); ?>
+                    <?php _e('Status', 'imgfast-optimizer'); ?>
                 </a>
             </nav>
 
             <form method="post" action="options.php">
                 <?php
-                settings_fields('imagecdn_settings');
+                settings_fields('imgfast_settings');
 
                 switch ($active_tab) {
                     case 'advanced':
@@ -207,95 +207,95 @@ class ImageCDN_Admin {
         <table class="form-table" role="presentation">
             <tr>
                 <th scope="row">
-                    <label for="imagecdn_enabled"><?php _e('Enable ImageCDN', 'imagecdn-optimizer'); ?></label>
+                    <label for="imgfast_enabled"><?php _e('Enable Imgfast', 'imgfast-optimizer'); ?></label>
                 </th>
                 <td>
                     <label>
                         <input type="checkbox"
-                               name="<?php echo ImageCDN_Settings::OPTION_KEY; ?>[enabled]"
-                               id="imagecdn_enabled"
+                               name="<?php echo Imgfast_Settings::OPTION_KEY; ?>[enabled]"
+                               id="imgfast_enabled"
                                value="1"
                                <?php checked($settings['enabled']); ?>>
-                        <?php _e('Enable image optimization via ImageCDN', 'imagecdn-optimizer'); ?>
+                        <?php _e('Enable image optimization via Imgfast', 'imgfast-optimizer'); ?>
                     </label>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label for="imagecdn_public_key"><?php _e('API Key (Public)', 'imagecdn-optimizer'); ?></label>
+                    <label for="imgfast_public_key"><?php _e('API Key (Public)', 'imgfast-optimizer'); ?></label>
                 </th>
                 <td>
                     <input type="text"
-                           name="<?php echo ImageCDN_Settings::OPTION_KEY; ?>[public_key]"
-                           id="imagecdn_public_key"
+                           name="<?php echo Imgfast_Settings::OPTION_KEY; ?>[public_key]"
+                           id="imgfast_public_key"
                            value="<?php echo esc_attr($settings['public_key']); ?>"
                            class="regular-text"
-                           placeholder="imgcdn_pk_xxxxxxxxxx">
+                           placeholder="imgfast_pk_xxxxxxxxxx">
                     <p class="description">
-                        <?php _e('Enter your ImageCDN public key.', 'imagecdn-optimizer'); ?>
-                        <a href="https://dashboard.imagecdn.io/api-keys" target="_blank"><?php _e('Get your API key', 'imagecdn-optimizer'); ?></a>
+                        <?php _e('Enter your Imgfast public key.', 'imgfast-optimizer'); ?>
+                        <a href="https://dashboard.imgfast.io/api-keys" target="_blank"><?php _e('Get your API key', 'imgfast-optimizer'); ?></a>
                     </p>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label for="imagecdn_quality"><?php _e('Default Quality', 'imagecdn-optimizer'); ?></label>
+                    <label for="imgfast_quality"><?php _e('Default Quality', 'imgfast-optimizer'); ?></label>
                 </th>
                 <td>
                     <input type="number"
-                           name="<?php echo ImageCDN_Settings::OPTION_KEY; ?>[default_quality]"
-                           id="imagecdn_quality"
+                           name="<?php echo Imgfast_Settings::OPTION_KEY; ?>[default_quality]"
+                           id="imgfast_quality"
                            value="<?php echo esc_attr($settings['default_quality']); ?>"
                            min="1"
                            max="100"
                            class="small-text">
                     <p class="description">
-                        <?php _e('Image quality (1-100). Lower values = smaller files. Recommended: 80', 'imagecdn-optimizer'); ?>
+                        <?php _e('Image quality (1-100). Lower values = smaller files. Recommended: 80', 'imgfast-optimizer'); ?>
                     </p>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label for="imagecdn_auto_webp"><?php _e('Auto WebP/AVIF', 'imagecdn-optimizer'); ?></label>
+                    <label for="imgfast_auto_webp"><?php _e('Auto WebP/AVIF', 'imgfast-optimizer'); ?></label>
                 </th>
                 <td>
                     <label>
                         <input type="checkbox"
-                               name="<?php echo ImageCDN_Settings::OPTION_KEY; ?>[auto_webp]"
-                               id="imagecdn_auto_webp"
+                               name="<?php echo Imgfast_Settings::OPTION_KEY; ?>[auto_webp]"
+                               id="imgfast_auto_webp"
                                value="1"
                                <?php checked($settings['auto_webp']); ?>>
-                        <?php _e('Automatically serve WebP/AVIF based on browser support', 'imagecdn-optimizer'); ?>
+                        <?php _e('Automatically serve WebP/AVIF based on browser support', 'imgfast-optimizer'); ?>
                     </label>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label for="imagecdn_lazy_load"><?php _e('Lazy Loading', 'imagecdn-optimizer'); ?></label>
+                    <label for="imgfast_lazy_load"><?php _e('Lazy Loading', 'imgfast-optimizer'); ?></label>
                 </th>
                 <td>
                     <label>
                         <input type="checkbox"
-                               name="<?php echo ImageCDN_Settings::OPTION_KEY; ?>[lazy_load]"
-                               id="imagecdn_lazy_load"
+                               name="<?php echo Imgfast_Settings::OPTION_KEY; ?>[lazy_load]"
+                               id="imgfast_lazy_load"
                                value="1"
                                <?php checked($settings['lazy_load']); ?>>
-                        <?php _e('Add native lazy loading to images', 'imagecdn-optimizer'); ?>
+                        <?php _e('Add native lazy loading to images', 'imgfast-optimizer'); ?>
                     </label>
                 </td>
             </tr>
 
             <tr>
-                <th scope="row"><?php _e('Test Connection', 'imagecdn-optimizer'); ?></th>
+                <th scope="row"><?php _e('Test Connection', 'imgfast-optimizer'); ?></th>
                 <td>
-                    <button type="button" class="button" id="imagecdn-test-connection">
-                        <?php _e('Test CDN Connection', 'imagecdn-optimizer'); ?>
+                    <button type="button" class="button" id="imgfast-test-connection">
+                        <?php _e('Test CDN Connection', 'imgfast-optimizer'); ?>
                     </button>
-                    <span id="imagecdn-test-result"></span>
+                    <span id="imgfast-test-result"></span>
                 </td>
             </tr>
         </table>
@@ -311,64 +311,64 @@ class ImageCDN_Admin {
         <table class="form-table" role="presentation">
             <tr>
                 <th scope="row">
-                    <label for="imagecdn_cdn_url"><?php _e('CDN URL', 'imagecdn-optimizer'); ?></label>
+                    <label for="imgfast_cdn_url"><?php _e('CDN URL', 'imgfast-optimizer'); ?></label>
                 </th>
                 <td>
                     <input type="url"
-                           name="<?php echo ImageCDN_Settings::OPTION_KEY; ?>[cdn_url]"
-                           id="imagecdn_cdn_url"
+                           name="<?php echo Imgfast_Settings::OPTION_KEY; ?>[cdn_url]"
+                           id="imgfast_cdn_url"
                            value="<?php echo esc_attr($settings['cdn_url']); ?>"
                            class="regular-text">
                     <p class="description">
-                        <?php _e('Default: https://cdn.imagecdn.io', 'imagecdn-optimizer'); ?>
+                        <?php _e('Default: https://cdn.imgfast.io', 'imgfast-optimizer'); ?>
                     </p>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label for="imagecdn_custom_domain"><?php _e('Custom Domain', 'imagecdn-optimizer'); ?></label>
+                    <label for="imgfast_custom_domain"><?php _e('Custom Domain', 'imgfast-optimizer'); ?></label>
                 </th>
                 <td>
                     <input type="text"
-                           name="<?php echo ImageCDN_Settings::OPTION_KEY; ?>[custom_domain]"
-                           id="imagecdn_custom_domain"
+                           name="<?php echo Imgfast_Settings::OPTION_KEY; ?>[custom_domain]"
+                           id="imgfast_custom_domain"
                            value="<?php echo esc_attr($settings['custom_domain']); ?>"
                            class="regular-text"
                            placeholder="images.yourdomain.com">
                     <p class="description">
-                        <?php _e('Use a custom domain for CDN URLs (requires Pro plan)', 'imagecdn-optimizer'); ?>
+                        <?php _e('Use a custom domain for CDN URLs (requires Pro plan)', 'imgfast-optimizer'); ?>
                     </p>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label for="imagecdn_srcset"><?php _e('Responsive Images', 'imagecdn-optimizer'); ?></label>
+                    <label for="imgfast_srcset"><?php _e('Responsive Images', 'imgfast-optimizer'); ?></label>
                 </th>
                 <td>
                     <label>
                         <input type="checkbox"
-                               name="<?php echo ImageCDN_Settings::OPTION_KEY; ?>[include_srcset]"
-                               id="imagecdn_srcset"
+                               name="<?php echo Imgfast_Settings::OPTION_KEY; ?>[include_srcset]"
+                               id="imgfast_srcset"
                                value="1"
                                <?php checked($settings['include_srcset']); ?>>
-                        <?php _e('Rewrite srcset attributes for responsive images', 'imagecdn-optimizer'); ?>
+                        <?php _e('Rewrite srcset attributes for responsive images', 'imgfast-optimizer'); ?>
                     </label>
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">
-                    <label for="imagecdn_excluded"><?php _e('Excluded Paths', 'imagecdn-optimizer'); ?></label>
+                    <label for="imgfast_excluded"><?php _e('Excluded Paths', 'imgfast-optimizer'); ?></label>
                 </th>
                 <td>
-                    <textarea name="<?php echo ImageCDN_Settings::OPTION_KEY; ?>[excluded_paths]"
-                              id="imagecdn_excluded"
+                    <textarea name="<?php echo Imgfast_Settings::OPTION_KEY; ?>[excluded_paths]"
+                              id="imgfast_excluded"
                               rows="5"
                               class="large-text code"><?php echo esc_textarea(implode("\n", $settings['excluded_paths'])); ?></textarea>
                     <p class="description">
-                        <?php _e('Enter paths to exclude (one per line). Images containing these paths will not be optimized.', 'imagecdn-optimizer'); ?>
+                        <?php _e('Enter paths to exclude (one per line). Images containing these paths will not be optimized.', 'imgfast-optimizer'); ?>
                     </p>
                 </td>
             </tr>
@@ -382,69 +382,69 @@ class ImageCDN_Admin {
     private function render_status_tab() {
         $settings = $this->settings->get_all();
         ?>
-        <div class="imagecdn-status-cards">
-            <div class="imagecdn-status-card">
-                <h3><?php _e('Connection Status', 'imagecdn-optimizer'); ?></h3>
+        <div class="imgfast-status-cards">
+            <div class="imgfast-status-card">
+                <h3><?php _e('Connection Status', 'imgfast-optimizer'); ?></h3>
                 <p class="status-indicator <?php echo $this->settings->is_enabled() ? 'status-active' : 'status-inactive'; ?>">
                     <?php echo $this->settings->is_enabled()
-                        ? __('Active', 'imagecdn-optimizer')
-                        : __('Inactive', 'imagecdn-optimizer'); ?>
+                        ? __('Active', 'imgfast-optimizer')
+                        : __('Inactive', 'imgfast-optimizer'); ?>
                 </p>
             </div>
 
-            <div class="imagecdn-status-card">
-                <h3><?php _e('CDN URL', 'imagecdn-optimizer'); ?></h3>
+            <div class="imgfast-status-card">
+                <h3><?php _e('CDN URL', 'imgfast-optimizer'); ?></h3>
                 <code><?php echo esc_html($this->settings->get_cdn_base_url()); ?></code>
             </div>
 
-            <div class="imagecdn-status-card">
-                <h3><?php _e('Configuration', 'imagecdn-optimizer'); ?></h3>
+            <div class="imgfast-status-card">
+                <h3><?php _e('Configuration', 'imgfast-optimizer'); ?></h3>
                 <ul>
-                    <li><?php printf(__('Quality: %d%%', 'imagecdn-optimizer'), $settings['default_quality']); ?></li>
-                    <li><?php printf(__('Auto WebP: %s', 'imagecdn-optimizer'), $settings['auto_webp'] ? __('Yes', 'imagecdn-optimizer') : __('No', 'imagecdn-optimizer')); ?></li>
-                    <li><?php printf(__('Lazy Load: %s', 'imagecdn-optimizer'), $settings['lazy_load'] ? __('Yes', 'imagecdn-optimizer') : __('No', 'imagecdn-optimizer')); ?></li>
-                    <li><?php printf(__('Srcset: %s', 'imagecdn-optimizer'), $settings['include_srcset'] ? __('Yes', 'imagecdn-optimizer') : __('No', 'imagecdn-optimizer')); ?></li>
+                    <li><?php printf(__('Quality: %d%%', 'imgfast-optimizer'), $settings['default_quality']); ?></li>
+                    <li><?php printf(__('Auto WebP: %s', 'imgfast-optimizer'), $settings['auto_webp'] ? __('Yes', 'imgfast-optimizer') : __('No', 'imgfast-optimizer')); ?></li>
+                    <li><?php printf(__('Lazy Load: %s', 'imgfast-optimizer'), $settings['lazy_load'] ? __('Yes', 'imgfast-optimizer') : __('No', 'imgfast-optimizer')); ?></li>
+                    <li><?php printf(__('Srcset: %s', 'imgfast-optimizer'), $settings['include_srcset'] ? __('Yes', 'imgfast-optimizer') : __('No', 'imgfast-optimizer')); ?></li>
                 </ul>
             </div>
         </div>
 
-        <h3><?php _e('Sample Transformed URL', 'imagecdn-optimizer'); ?></h3>
+        <h3><?php _e('Sample Transformed URL', 'imgfast-optimizer'); ?></h3>
         <?php
         $sample_image = $this->get_sample_image();
         if ($sample_image):
-            $rewriter = new ImageCDN_Rewriter($this->settings);
+            $rewriter = new Imgfast_Rewriter($this->settings);
             $cdn_url = $rewriter->build_cdn_url($sample_image, ['width' => 800]);
         ?>
         <table class="widefat">
             <tr>
-                <th><?php _e('Original URL', 'imagecdn-optimizer'); ?></th>
+                <th><?php _e('Original URL', 'imgfast-optimizer'); ?></th>
                 <td><code><?php echo esc_html($sample_image); ?></code></td>
             </tr>
             <tr>
-                <th><?php _e('CDN URL', 'imagecdn-optimizer'); ?></th>
+                <th><?php _e('CDN URL', 'imgfast-optimizer'); ?></th>
                 <td><code><?php echo esc_html($cdn_url); ?></code></td>
             </tr>
         </table>
         <?php else: ?>
-        <p><?php _e('No images found in media library.', 'imagecdn-optimizer'); ?></p>
+        <p><?php _e('No images found in media library.', 'imgfast-optimizer'); ?></p>
         <?php endif; ?>
 
-        <h3><?php _e('System Information', 'imagecdn-optimizer'); ?></h3>
+        <h3><?php _e('System Information', 'imgfast-optimizer'); ?></h3>
         <table class="widefat">
             <tr>
-                <th><?php _e('WordPress Version', 'imagecdn-optimizer'); ?></th>
+                <th><?php _e('WordPress Version', 'imgfast-optimizer'); ?></th>
                 <td><?php echo esc_html(get_bloginfo('version')); ?></td>
             </tr>
             <tr>
-                <th><?php _e('PHP Version', 'imagecdn-optimizer'); ?></th>
+                <th><?php _e('PHP Version', 'imgfast-optimizer'); ?></th>
                 <td><?php echo esc_html(PHP_VERSION); ?></td>
             </tr>
             <tr>
-                <th><?php _e('Plugin Version', 'imagecdn-optimizer'); ?></th>
-                <td><?php echo esc_html(IMAGECDN_VERSION); ?></td>
+                <th><?php _e('Plugin Version', 'imgfast-optimizer'); ?></th>
+                <td><?php echo esc_html(IMGFAST_VERSION); ?></td>
             </tr>
             <tr>
-                <th><?php _e('Site URL', 'imagecdn-optimizer'); ?></th>
+                <th><?php _e('Site URL', 'imgfast-optimizer'); ?></th>
                 <td><?php echo esc_html(site_url()); ?></td>
             </tr>
         </table>
@@ -475,16 +475,16 @@ class ImageCDN_Admin {
      * AJAX: Test CDN connection
      */
     public function ajax_test_connection() {
-        check_ajax_referer('imagecdn_admin', 'nonce');
+        check_ajax_referer('imgfast_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => __('Unauthorized', 'imagecdn-optimizer')]);
+            wp_send_json_error(['message' => __('Unauthorized', 'imgfast-optimizer')]);
         }
 
         $public_key = $this->settings->get('public_key');
 
         if (empty($public_key)) {
-            wp_send_json_error(['message' => __('API key not configured', 'imagecdn-optimizer')]);
+            wp_send_json_error(['message' => __('API key not configured', 'imgfast-optimizer')]);
         }
 
         $test_url = $this->settings->get_cdn_base_url() . '/health';
@@ -497,10 +497,10 @@ class ImageCDN_Admin {
         $status_code = wp_remote_retrieve_response_code($response);
 
         if ($status_code >= 200 && $status_code < 400) {
-            wp_send_json_success(['message' => __('Connection successful!', 'imagecdn-optimizer')]);
+            wp_send_json_success(['message' => __('Connection successful!', 'imgfast-optimizer')]);
         } else {
             wp_send_json_error([
-                'message' => sprintf(__('CDN returned status %d', 'imagecdn-optimizer'), $status_code)
+                'message' => sprintf(__('CDN returned status %d', 'imgfast-optimizer'), $status_code)
             ]);
         }
     }
@@ -509,32 +509,32 @@ class ImageCDN_Admin {
      * AJAX: Clear any local caches
      */
     public function ajax_clear_cache() {
-        check_ajax_referer('imagecdn_admin', 'nonce');
+        check_ajax_referer('imgfast_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => __('Unauthorized', 'imagecdn-optimizer')]);
+            wp_send_json_error(['message' => __('Unauthorized', 'imgfast-optimizer')]);
         }
 
         // Clear object cache if available
         wp_cache_flush();
 
         // Clear any transients
-        delete_transient('imagecdn_stats');
+        delete_transient('imgfast_stats');
 
-        wp_send_json_success(['message' => __('Cache cleared!', 'imagecdn-optimizer')]);
+        wp_send_json_success(['message' => __('Cache cleared!', 'imgfast-optimizer')]);
     }
 
     /**
      * AJAX: Get usage stats
      */
     public function ajax_get_stats() {
-        check_ajax_referer('imagecdn_admin', 'nonce');
+        check_ajax_referer('imgfast_admin', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => __('Unauthorized', 'imagecdn-optimizer')]);
+            wp_send_json_error(['message' => __('Unauthorized', 'imgfast-optimizer')]);
         }
 
-        // In a real implementation, this would fetch from ImageCDN API
+        // In a real implementation, this would fetch from Imgfast API
         wp_send_json_success([
             'requests' => 0,
             'bandwidth' => '0 MB',

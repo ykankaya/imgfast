@@ -1,8 +1,8 @@
 <?php
 /**
- * ImageCDN Settings Manager
+ * Imgfast Settings Manager
  *
- * @package ImageCDN
+ * @package Imgfast
  */
 
 // Prevent direct access
@@ -13,12 +13,12 @@ if (!defined('ABSPATH')) {
 /**
  * Manages plugin settings with validation
  */
-class ImageCDN_Settings {
+class Imgfast_Settings {
 
     /**
      * Option key in wp_options table
      */
-    const OPTION_KEY = 'imagecdn_settings';
+    const OPTION_KEY = 'imgfast_settings';
 
     /**
      * Default settings
@@ -28,7 +28,7 @@ class ImageCDN_Settings {
     private $defaults = [
         'enabled'          => false,
         'public_key'       => '',
-        'cdn_url'          => 'https://cdn.imagecdn.io',
+        'cdn_url'          => 'https://cdn.imgfast.io',
         'default_quality'  => 80,
         'default_format'   => 'auto',
         'lazy_load'        => true,
@@ -157,7 +157,7 @@ class ImageCDN_Settings {
      * @return bool
      */
     public function validate_public_key($key) {
-        return preg_match('/^imgcdn_pk_[a-zA-Z0-9]{8,16}$/', $key);
+        return preg_match('/^imgfast_pk_[a-zA-Z0-9]{8,16}$/', $key);
     }
 
     /**

@@ -79,11 +79,11 @@ export async function validateApiKey(context: RequestContext): Promise<AuthResul
 }
 
 /**
- * Validate public key format: imgcdn_pk_{base62}
+ * Validate public key format: imgfast_pk_{base62}
  */
 function isValidPublicKeyFormat(publicKey: string): boolean {
-  // Must start with imgcdn_pk_ prefix
-  if (!publicKey.startsWith('imgcdn_pk_')) {
+  // Must start with imgfast_pk_ prefix
+  if (!publicKey.startsWith('imgfast_pk_')) {
     return false;
   }
 

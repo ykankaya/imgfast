@@ -105,11 +105,11 @@ export function buildCdnUrl(
 
 // Validation utilities
 export function isValidPublicKey(key: string): boolean {
-  return /^imgcdn_pk_[a-zA-Z0-9]{8,16}$/.test(key);
+  return /^imgfast_pk_[a-zA-Z0-9]{8,16}$/.test(key);
 }
 
 export function isValidSecretKey(key: string): boolean {
-  return /^imgcdn_sk_[a-zA-Z0-9]{24,40}$/.test(key);
+  return /^imgfast_sk_[a-zA-Z0-9]{24,40}$/.test(key);
 }
 
 export function isValidDomain(domain: string): boolean {

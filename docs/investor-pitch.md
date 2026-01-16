@@ -53,7 +53,7 @@ User Request → Edge (200+ PoPs) → Transform → Cache → Deliver
 
 ```
 Original:  /photo.jpg
-Optimized: /imgcdn_pk_xxx/photo.jpg?w=800&q=80&f=auto
+Optimized: /imgfast_pk_xxx/photo.jpg?w=800&q=80&f=auto
 
 Result: 70% smaller file, same visual quality
 ```

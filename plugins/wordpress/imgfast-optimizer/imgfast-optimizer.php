@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name: ImageCDN Optimizer
- * Plugin URI: https://imagecdn.io/wordpress
- * Description: Optimize and deliver images via ImageCDN's global edge network. Automatic WebP/AVIF conversion, smart compression, and instant delivery.
+ * Plugin Name: Imgfast Optimizer
+ * Plugin URI: https://imgfast.io/wordpress
+ * Description: Optimize and deliver images via Imgfast's global edge network. Automatic WebP/AVIF conversion, smart compression, and instant delivery.
  * Version: 1.0.0
  * Requires at least: 5.9
  * Requires PHP: 7.4
- * Author: ImageCDN
- * Author URI: https://imagecdn.io
+ * Author: Imgfast
+ * Author URI: https://imgfast.io
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: imagecdn-optimizer
+ * Text Domain: imgfast-optimizer
  * Domain Path: /languages
  */
 
@@ -20,17 +20,17 @@ if (!defined('ABSPATH')) {
 }
 
 // Plugin constants
-define('IMAGECDN_VERSION', '1.0.0');
-define('IMAGECDN_PLUGIN_FILE', __FILE__);
-define('IMAGECDN_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('IMAGECDN_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('IMAGECDN_PLUGIN_BASENAME', plugin_basename(__FILE__));
+define('IMGFAST_VERSION', '1.0.0');
+define('IMGFAST_PLUGIN_FILE', __FILE__);
+define('IMGFAST_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('IMGFAST_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('IMGFAST_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 /**
  * Autoloader for plugin classes
  */
 spl_autoload_register(function ($class) {
-    $prefix = 'ImageCDN_';
+    $prefix = 'Imgfast_';
 
     if (strpos($class, $prefix) !== 0) {
         return;
@@ -38,7 +38,7 @@ spl_autoload_register(function ($class) {
 
     $class_name = str_replace($prefix, '', $class);
     $class_name = strtolower(str_replace('_', '-', $class_name));
-    $file = IMAGECDN_PLUGIN_DIR . 'includes/class-imagecdn-' . $class_name . '.php';
+    $file = IMGFAST_PLUGIN_DIR . 'includes/class-imgfast-' . $class_name . '.php';
 
     if (file_exists($file)) {
         require_once $file;
@@ -46,28 +46,28 @@ spl_autoload_register(function ($class) {
 });
 
 // Load main plugin class
-require_once IMAGECDN_PLUGIN_DIR . 'includes/class-imagecdn.php';
+require_once IMGFAST_PLUGIN_DIR . 'includes/class-imgfast.php';
 
 /**
  * Initialize the plugin
  */
-function imagecdn_init() {
-    return ImageCDN::get_instance();
+function imgfast_init() {
+    return Imgfast::get_instance();
 }
 
 // Start the plugin
-add_action('plugins_loaded', 'imagecdn_init');
+add_action('plugins_loaded', 'imgfast_init');
 
 /**
  * Activation hook
  */
 register_activation_hook(__FILE__, function () {
     // Set default options if not exist
-    if (!get_option('imagecdn_settings')) {
-        add_option('imagecdn_settings', [
+    if (!get_option('imgfast_settings')) {
+        add_option('imgfast_settings', [
             'enabled' => false,
             'public_key' => '',
-            'cdn_url' => 'https://cdn.imagecdn.io',
+            'cdn_url' => 'https://cdn.imgfast.io',
             'default_quality' => 80,
             'default_format' => 'auto',
             'lazy_load' => true,
@@ -92,11 +92,11 @@ register_deactivation_hook(__FILE__, function () {
 /**
  * Add settings link on plugins page
  */
-add_filter('plugin_action_links_' . IMAGECDN_PLUGIN_BASENAME, function ($links) {
+add_filter('plugin_action_links_' . IMGFAST_PLUGIN_BASENAME, function ($links) {
     $settings_link = sprintf(
         '<a href="%s">%s</a>',
-        admin_url('options-general.php?page=imagecdn-settings'),
-        __('Settings', 'imagecdn-optimizer')
+        admin_url('options-general.php?page=imgfast-settings'),
+        __('Settings', 'imgfast-optimizer')
     );
     array_unshift($links, $settings_link);
     return $links;

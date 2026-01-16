@@ -1,5 +1,5 @@
-=== ImageCDN Optimizer ===
-Contributors: imagecdn
+=== Imgfast Optimizer ===
+Contributors: imgfast
 Tags: image optimization, cdn, webp, avif, performance, lazy loading, responsive images
 Requires at least: 5.9
 Tested up to: 6.4
@@ -8,11 +8,11 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Automatically optimize and deliver images through ImageCDN's global edge network with WebP/AVIF conversion, responsive images, and lazy loading.
+Automatically optimize and deliver images through Imgfast's global edge network with WebP/AVIF conversion, responsive images, and lazy loading.
 
 == Description ==
 
-**ImageCDN Optimizer** is a lightweight WordPress plugin that automatically optimizes and delivers your images through ImageCDN's global content delivery network. No server configuration required - just enter your API key and your images are instantly optimized.
+**Imgfast Optimizer** is a lightweight WordPress plugin that automatically optimizes and delivers your images through Imgfast's global content delivery network. No server configuration required - just enter your API key and your images are instantly optimized.
 
 = Key Features =
 
@@ -28,16 +28,16 @@ Automatically optimize and deliver images through ImageCDN's global edge network
 = How It Works =
 
 1. Install and activate the plugin
-2. Enter your ImageCDN API key (get one free at imagecdn.io)
+2. Enter your Imgfast API key (get one free at imgfast.io)
 3. Enable the plugin
-4. All your images are now served through ImageCDN
+4. All your images are now served through Imgfast
 
-The plugin automatically rewrites image URLs in your content, thumbnails, and media library to use ImageCDN's optimization service.
+The plugin automatically rewrites image URLs in your content, thumbnails, and media library to use Imgfast's optimization service.
 
 = CDN URL Format =
 
 Original: `https://yoursite.com/wp-content/uploads/photo.jpg`
-Optimized: `https://cdn.imagecdn.io/your-key/wp-content/uploads/photo.jpg?w=800&q=80&f=auto`
+Optimized: `https://cdn.imgfast.io/your-key/wp-content/uploads/photo.jpg?w=800&q=80&f=auto`
 
 = Transformation Parameters =
 
@@ -52,34 +52,34 @@ Optimized: `https://cdn.imagecdn.io/your-key/wp-content/uploads/photo.jpg?w=800&
 = From WordPress Dashboard =
 
 1. Navigate to Plugins > Add New
-2. Search for "ImageCDN Optimizer"
+2. Search for "Imgfast Optimizer"
 3. Click "Install Now" then "Activate"
-4. Go to Settings > ImageCDN
+4. Go to Settings > Imgfast
 5. Enter your API key and enable the plugin
 
 = Manual Installation =
 
 1. Download the plugin zip file
-2. Upload to `/wp-content/plugins/imagecdn-optimizer/`
+2. Upload to `/wp-content/plugins/imgfast-optimizer/`
 3. Activate through the Plugins menu
-4. Configure in Settings > ImageCDN
+4. Configure in Settings > Imgfast
 
 = Getting an API Key =
 
-1. Visit [imagecdn.io](https://imagecdn.io) and create an account
+1. Visit [imgfast.io](https://imgfast.io) and create an account
 2. Navigate to your dashboard
-3. Copy your Public API Key (starts with `imgcdn_pk_`)
+3. Copy your Public API Key (starts with `imgfast_pk_`)
 4. Paste it in the plugin settings
 
 == Frequently Asked Questions ==
 
-= Do I need an ImageCDN account? =
+= Do I need an Imgfast account? =
 
-Yes, you need a free ImageCDN account to use this plugin. Sign up at [imagecdn.io](https://imagecdn.io).
+Yes, you need a free Imgfast account to use this plugin. Sign up at [imgfast.io](https://imgfast.io).
 
 = Will this work with my theme? =
 
-Yes! ImageCDN Optimizer works with any WordPress theme. It automatically rewrites image URLs without modifying your theme files.
+Yes! Imgfast Optimizer works with any WordPress theme. It automatically rewrites image URLs without modifying your theme files.
 
 = Does it work with page builders? =
 
@@ -91,7 +91,7 @@ The plugin supports JPEG, PNG, GIF, and WebP. It can convert images to WebP or A
 
 = Will it affect my SEO? =
 
-ImageCDN improves page speed which is a positive SEO factor. All images maintain their original URLs for SEO purposes.
+Imgfast improves page speed which is a positive SEO factor. All images maintain their original URLs for SEO purposes.
 
 = Can I use a custom domain? =
 
@@ -99,11 +99,11 @@ Yes, Pro plans support custom domains like `images.yoursite.com`.
 
 = How do I exclude certain images? =
 
-Go to Settings > ImageCDN > Advanced and add paths to exclude. One path per line.
+Go to Settings > Imgfast > Advanced and add paths to exclude. One path per line.
 
 = Is there a Gutenberg block? =
 
-Yes! Search for "ImageCDN Image" in the block inserter for advanced control over individual images.
+Yes! Search for "Imgfast Image" in the block inserter for advanced control over individual images.
 
 == Screenshots ==
 
@@ -128,14 +128,14 @@ Yes! Search for "ImageCDN Image" in the block inserter for advanced control over
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release of ImageCDN Optimizer.
+Initial release of Imgfast Optimizer.
 
 == Privacy Policy ==
 
-ImageCDN Optimizer sends image requests through ImageCDN's servers for optimization. No personal user data is collected or transmitted. See our full privacy policy at [imagecdn.io/privacy](https://imagecdn.io/privacy).
+Imgfast Optimizer sends image requests through Imgfast's servers for optimization. No personal user data is collected or transmitted. See our full privacy policy at [imgfast.io/privacy](https://imgfast.io/privacy).
 
 == Support ==
 
-* Documentation: [docs.imagecdn.io](https://docs.imagecdn.io)
-* Support: [support@imagecdn.io](mailto:support@imagecdn.io)
-* GitHub: [github.com/imagecdn/wordpress-plugin](https://github.com/imagecdn/wordpress-plugin)
+* Documentation: [docs.imgfast.io](https://docs.imgfast.io)
+* Support: [support@imgfast.io](mailto:support@imgfast.io)
+* GitHub: [github.com/imgfast/wordpress-plugin](https://github.com/imgfast/wordpress-plugin)

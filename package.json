@@ -1,8 +1,8 @@
 {
-  "name": "imagecdn",
+  "name": "imgfast",
   "version": "0.1.0",
   "private": true,
-  "description": "Global CDN + Image Optimization SaaS Platform",
+  "description": "Imgfast - Global CDN + Image Optimization SaaS Platform",
   "packageManager": "pnpm@10.28.0",
   "engines": {
     "node": ">=18.0.0",

@@ -1,16 +1,16 @@
 /**
- * ImageCDN Admin JavaScript
+ * Imgfast Admin JavaScript
  *
- * @package ImageCDN
+ * @package Imgfast
  */
 
 (function($) {
     'use strict';
 
     /**
-     * ImageCDN Admin Handler
+     * Imgfast Admin Handler
      */
-    var ImageCDNAdmin = {
+    var ImgfastAdmin = {
         /**
          * Initialize
          */
@@ -23,10 +23,10 @@
          * Bind event handlers
          */
         bindEvents: function() {
-            $('#imagecdn-test-connection').on('click', this.testConnection.bind(this));
-            $('#imagecdn-clear-cache').on('click', this.clearCache.bind(this));
-            $('#imagecdn_public_key').on('blur', this.validateApiKey.bind(this));
-            $('#imagecdn_quality').on('input', this.updateQualityLabel.bind(this));
+            $('#imgfast-test-connection').on('click', this.testConnection.bind(this));
+            $('#imgfast-clear-cache').on('click', this.clearCache.bind(this));
+            $('#imgfast_public_key').on('blur', this.validateApiKey.bind(this));
+            $('#imgfast_quality').on('input', this.updateQualityLabel.bind(this));
         },
 
         /**
@@ -36,19 +36,19 @@
             e.preventDefault();
 
             var $button = $(e.target);
-            var $result = $('#imagecdn-test-result');
+            var $result = $('#imgfast-test-result');
 
             $button.prop('disabled', true);
             $result
                 .removeClass('success error')
-                .html('<span class="spinner is-active"></span> ' + imagecdnAdmin.strings.testing);
+                .html('<span class="spinner is-active"></span> ' + imgfastAdmin.strings.testing);
 
             $.ajax({
-                url: imagecdnAdmin.ajaxUrl,
+                url: imgfastAdmin.ajaxUrl,
                 type: 'POST',
                 data: {
-                    action: 'imagecdn_test_connection',
-                    nonce: imagecdnAdmin.nonce
+                    action: 'imgfast_test_connection',
+                    nonce: imgfastAdmin.nonce
                 },
                 success: function(response) {
                     if (response.success) {
@@ -58,13 +58,13 @@
                     } else {
                         $result
                             .addClass('error')
-                            .html('<span class="dashicons dashicons-warning"></span> ' + imagecdnAdmin.strings.error + ' ' + response.data.message);
+                            .html('<span class="dashicons dashicons-warning"></span> ' + imgfastAdmin.strings.error + ' ' + response.data.message);
                     }
                 },
                 error: function() {
                     $result
                         .addClass('error')
-                        .html('<span class="dashicons dashicons-warning"></span> ' + imagecdnAdmin.strings.error + ' Network error');
+                        .html('<span class="dashicons dashicons-warning"></span> ' + imgfastAdmin.strings.error + ' Network error');
                 },
                 complete: function() {
                     $button.prop('disabled', false);
@@ -82,18 +82,18 @@
             var $result = $button.next('.cache-result');
 
             $button.prop('disabled', true);
-            $result.text(imagecdnAdmin.strings.clearing);
+            $result.text(imgfastAdmin.strings.clearing);
 
             $.ajax({
-                url: imagecdnAdmin.ajaxUrl,
+                url: imgfastAdmin.ajaxUrl,
                 type: 'POST',
                 data: {
-                    action: 'imagecdn_clear_cache',
-                    nonce: imagecdnAdmin.nonce
+                    action: 'imgfast_clear_cache',
+                    nonce: imgfastAdmin.nonce
                 },
                 success: function(response) {
                     if (response.success) {
-                        $result.text(imagecdnAdmin.strings.cleared);
+                        $result.text(imgfastAdmin.strings.cleared);
                     } else {
                         $result.text(response.data.message);
                     }
@@ -126,14 +126,14 @@
                 return;
             }
 
-            // Check format: imgcdn_pk_xxxxx
-            var pattern = /^imgcdn_pk_[a-zA-Z0-9]+$/;
+            // Check format: imgfast_pk_xxxxx
+            var pattern = /^imgfast_pk_[a-zA-Z0-9]+$/;
 
             if (pattern.test(value)) {
                 $input.addClass('valid');
             } else {
                 $input.addClass('invalid');
-                this.showFieldError($input, 'API key should be in format: imgcdn_pk_xxxxx');
+                this.showFieldError($input, 'API key should be in format: imgfast_pk_xxxxx');
             }
         },
 
@@ -161,7 +161,7 @@
          * Initialize quality preview
          */
         initQualityPreview: function() {
-            var $quality = $('#imagecdn_quality');
+            var $quality = $('#imgfast_quality');
 
             if (!$quality.length) {
                 return;
@@ -226,7 +226,7 @@
 
     // Initialize on document ready
     $(document).ready(function() {
-        ImageCDNAdmin.init();
+        ImgfastAdmin.init();
     });
 
 })(jQuery);

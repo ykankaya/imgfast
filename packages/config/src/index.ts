@@ -112,8 +112,8 @@ export const CACHE_PREFIXES = {
 
 // API Key Prefixes
 export const API_KEY_PREFIXES = {
-  publicKey: 'imgcdn_pk_',
-  secretKey: 'imgcdn_sk_',
+  publicKey: 'imgfast_pk_',
+  secretKey: 'imgfast_sk_',
 } as const;
 
 // HTTP Status Codes

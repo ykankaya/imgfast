@@ -1,7 +1,7 @@
 /**
- * ImageCDN Optimized Image Block
+ * Imgfast Optimized Image Block
  *
- * @package ImageCDN
+ * @package Imgfast
  */
 
 (function(wp) {
@@ -17,11 +17,11 @@
      * Build CDN URL from image URL and transformation params
      */
     function buildCdnUrl(originalUrl, params) {
-        if (!originalUrl || !window.imagecdnBlock) {
+        if (!originalUrl || !window.imgfastBlock) {
             return originalUrl;
         }
 
-        const config = window.imagecdnBlock;
+        const config = window.imgfastBlock;
 
         if (!config.enabled || !config.cdnBase) {
             return originalUrl;
@@ -87,7 +87,7 @@
         }, [url, width, height, quality, format, fit]);
 
         const blockProps = useBlockProps({
-            className: 'wp-block-imagecdn-optimized-image'
+            className: 'wp-block-imgfast-optimized-image'
         });
 
         const onSelectImage = (media) => {
@@ -112,15 +112,15 @@
 
         // Image sizes for dropdown
         const imageSizes = [
-            { label: __('Thumbnail', 'imagecdn-optimizer'), value: 'thumbnail' },
-            { label: __('Medium', 'imagecdn-optimizer'), value: 'medium' },
-            { label: __('Large', 'imagecdn-optimizer'), value: 'large' },
-            { label: __('Full Size', 'imagecdn-optimizer'), value: 'full' }
+            { label: __('Thumbnail', 'imgfast-optimizer'), value: 'thumbnail' },
+            { label: __('Medium', 'imgfast-optimizer'), value: 'medium' },
+            { label: __('Large', 'imgfast-optimizer'), value: 'large' },
+            { label: __('Full Size', 'imgfast-optimizer'), value: 'full' }
         ];
 
         // Format options
         const formatOptions = [
-            { label: __('Auto (Best)', 'imagecdn-optimizer'), value: 'auto' },
+            { label: __('Auto (Best)', 'imgfast-optimizer'), value: 'auto' },
             { label: 'WebP', value: 'webp' },
             { label: 'AVIF', value: 'avif' },
             { label: 'JPEG', value: 'jpeg' },
@@ -129,28 +129,28 @@
 
         // Fit options
         const fitOptions = [
-            { label: __('Cover', 'imagecdn-optimizer'), value: 'cover' },
-            { label: __('Contain', 'imagecdn-optimizer'), value: 'contain' },
-            { label: __('Fill', 'imagecdn-optimizer'), value: 'fill' },
-            { label: __('Inside', 'imagecdn-optimizer'), value: 'inside' },
-            { label: __('Outside', 'imagecdn-optimizer'), value: 'outside' }
+            { label: __('Cover', 'imgfast-optimizer'), value: 'cover' },
+            { label: __('Contain', 'imgfast-optimizer'), value: 'contain' },
+            { label: __('Fill', 'imgfast-optimizer'), value: 'fill' },
+            { label: __('Inside', 'imgfast-optimizer'), value: 'inside' },
+            { label: __('Outside', 'imgfast-optimizer'), value: 'outside' }
         ];
 
         return (
             <Fragment>
                 <InspectorControls>
-                    <PanelBody title={__('Image Settings', 'imagecdn-optimizer')}>
+                    <PanelBody title={__('Image Settings', 'imgfast-optimizer')}>
                         <SelectControl
-                            label={__('Image Size', 'imagecdn-optimizer')}
+                            label={__('Image Size', 'imgfast-optimizer')}
                             value={sizeSlug}
                             options={imageSizes}
                             onChange={(value) => setAttributes({ sizeSlug: value })}
                         />
                     </PanelBody>
 
-                    <PanelBody title={__('CDN Optimization', 'imagecdn-optimizer')} initialOpen={true}>
+                    <PanelBody title={__('CDN Optimization', 'imgfast-optimizer')} initialOpen={true}>
                         <RangeControl
-                            label={__('Width (px)', 'imagecdn-optimizer')}
+                            label={__('Width (px)', 'imgfast-optimizer')}
                             value={width}
                             onChange={(value) => setAttributes({ width: value })}
                             min={50}
@@ -159,7 +159,7 @@
                         />
 
                         <RangeControl
-                            label={__('Height (px)', 'imagecdn-optimizer')}
+                            label={__('Height (px)', 'imgfast-optimizer')}
                             value={height}
                             onChange={(value) => setAttributes({ height: value })}
                             min={50}
@@ -168,24 +168,24 @@
                         />
 
                         <RangeControl
-                            label={__('Quality', 'imagecdn-optimizer')}
+                            label={__('Quality', 'imgfast-optimizer')}
                             value={quality}
                             onChange={(value) => setAttributes({ quality: value })}
                             min={1}
                             max={100}
-                            help={__('Lower quality = smaller file size', 'imagecdn-optimizer')}
+                            help={__('Lower quality = smaller file size', 'imgfast-optimizer')}
                         />
 
                         <SelectControl
-                            label={__('Format', 'imagecdn-optimizer')}
+                            label={__('Format', 'imgfast-optimizer')}
                             value={format}
                             options={formatOptions}
                             onChange={(value) => setAttributes({ format: value })}
-                            help={__('Auto selects best format based on browser', 'imagecdn-optimizer')}
+                            help={__('Auto selects best format based on browser', 'imgfast-optimizer')}
                         />
 
                         <SelectControl
-                            label={__('Fit Mode', 'imagecdn-optimizer')}
+                            label={__('Fit Mode', 'imgfast-optimizer')}
                             value={fit}
                             options={fitOptions}
                             onChange={(value) => setAttributes({ fit: value })}
@@ -205,7 +205,7 @@
                                         <ToolbarButton
                                             onClick={open}
                                             icon="edit"
-                                            label={__('Replace Image', 'imagecdn-optimizer')}
+                                            label={__('Replace Image', 'imgfast-optimizer')}
                                         />
                                     )}
                                 />
@@ -224,21 +224,21 @@
                                 render={({ open }) => (
                                     <Placeholder
                                         icon="format-image"
-                                        label={__('ImageCDN Image', 'imagecdn-optimizer')}
-                                        instructions={__('Upload or select an image to optimize via ImageCDN', 'imagecdn-optimizer')}
+                                        label={__('Imgfast Image', 'imgfast-optimizer')}
+                                        instructions={__('Upload or select an image to optimize via Imgfast', 'imgfast-optimizer')}
                                     >
                                         <Button
                                             variant="primary"
                                             onClick={open}
                                         >
-                                            {__('Select Image', 'imagecdn-optimizer')}
+                                            {__('Select Image', 'imgfast-optimizer')}
                                         </Button>
                                     </Placeholder>
                                 )}
                             />
                         </MediaUploadCheck>
                     ) : (
-                        <figure className="imagecdn-image-wrapper">
+                        <figure className="imgfast-image-wrapper">
                             <img
                                 src={previewUrl}
                                 alt={alt}
@@ -248,9 +248,9 @@
                                     objectFit: fit
                                 }}
                             />
-                            <div className="imagecdn-image-overlay">
-                                <span className="imagecdn-badge">
-                                    {__('CDN Optimized', 'imagecdn-optimizer')}
+                            <div className="imgfast-image-overlay">
+                                <span className="imgfast-badge">
+                                    {__('CDN Optimized', 'imgfast-optimizer')}
                                 </span>
                             </div>
                         </figure>
@@ -280,7 +280,7 @@
         }
 
         const blockProps = wp.blockEditor.useBlockProps.save({
-            className: 'wp-block-imagecdn-optimized-image'
+            className: 'wp-block-imgfast-optimized-image'
         });
 
         // Build data attributes for server-side rendering
@@ -291,9 +291,9 @@
                     alt={alt}
                     width={width}
                     height={height}
-                    data-imagecdn-quality={quality}
-                    data-imagecdn-format={format}
-                    data-imagecdn-fit={fit}
+                    data-imgfast-quality={quality}
+                    data-imgfast-format={format}
+                    data-imgfast-fit={fit}
                     loading="lazy"
                 />
                 {caption && (
@@ -304,7 +304,7 @@
     }
 
     // Register block
-    registerBlockType('imagecdn/optimized-image', {
+    registerBlockType('imgfast/optimized-image', {
         edit: Edit,
         save: Save
     });

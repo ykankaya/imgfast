@@ -1,6 +1,8 @@
-# ImageCDN
+# Imgfast
 
 A subscription-based, global CDN and image optimization SaaS platform — the **Stripe of image delivery**.
+
+🌐 **Website:** [imgfast.io](https://imgfast.io)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
@@ -8,7 +10,7 @@ A subscription-based, global CDN and image optimization SaaS platform — the **
 
 ## Overview
 
-ImageCDN is an edge-first image optimization platform competing with Cloudinary, ImageKit, and imgix. Built for developers, agencies, and e-commerce businesses who need fast, reliable image delivery without infrastructure complexity.
+Imgfast is an edge-first image optimization platform competing with Cloudinary, ImageKit, and imgix. Built for developers, agencies, and e-commerce businesses who need fast, reliable image delivery without infrastructure complexity.
 
 ### Key Features
 
@@ -55,7 +57,7 @@ ImageCDN is an edge-first image optimization platform competing with Cloudinary,
 ## Project Structure
 
 ```
-imagecdn/
+imgfast/
 ├── apps/
 │   ├── edge-worker/          # Cloudflare Worker (image delivery)
 │   │   ├── src/
@@ -91,7 +93,7 @@ imagecdn/
 │
 ├── plugins/
 │   └── wordpress/            # WordPress Plugin
-│       └── imagecdn-optimizer/
+│       └── imgfast-optimizer/
 │           ├── includes/     # PHP classes
 │           ├── admin/        # Admin assets
 │           ├── blocks/       # Gutenberg blocks
@@ -117,8 +119,8 @@ imagecdn/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/imagecdn.git
-cd imagecdn
+git clone https://github.com/your-org/imgfast.git
+cd imgfast
 
 # Install dependencies
 pnpm install
@@ -155,7 +157,7 @@ API_SECRET_KEY=internal-api-key
 
 # Dashboard
 NEXT_PUBLIC_API_URL=http://localhost:3001
-NEXT_PUBLIC_CDN_URL=https://cdn.imagecdn.io
+NEXT_PUBLIC_CDN_URL=https://cdn.imgfast.io
 
 # Edge Worker
 ENVIRONMENT=development
@@ -180,7 +182,7 @@ pnpm --filter @imagecdn/edge-worker dev  # Worker (port 8787)
 ### URL Format
 
 ```
-https://cdn.imagecdn.io/{public_key}/{image_path}?{params}
+https://cdn.imgfast.io/{public_key}/{image_path}?{params}
 ```
 
 ### Transformation Parameters
@@ -206,13 +208,13 @@ https://cdn.imagecdn.io/{public_key}/{image_path}?{params}
 
 ```html
 <!-- Basic resize -->
-<img src="https://cdn.imagecdn.io/imgcdn_pk_xxx/hero.jpg?w=800&h=600" />
+<img src="https://cdn.imgfast.io/imgfast_pk_xxx/hero.jpg?w=800&h=600" />
 
 <!-- Auto format with quality -->
-<img src="https://cdn.imagecdn.io/imgcdn_pk_xxx/hero.jpg?w=1200&q=85&f=auto" />
+<img src="https://cdn.imgfast.io/imgfast_pk_xxx/hero.jpg?w=1200&q=85&f=auto" />
 
 <!-- Thumbnail with crop -->
-<img src="https://cdn.imagecdn.io/imgcdn_pk_xxx/hero.jpg?w=200&h=200&fit=cover&g=center" />
+<img src="https://cdn.imgfast.io/imgfast_pk_xxx/hero.jpg?w=200&h=200&fit=cover&g=center" />
 ```
 
 ## API Reference
@@ -226,7 +228,7 @@ All API requests require authentication via JWT token or API key:
 Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
 
 # API Key (Server-to-server)
-X-API-Key: imgcdn_sk_xxxxxxxxxxxxx
+X-API-Key: imgfast_sk_xxxxxxxxxxxxx
 ```
 
 ### Endpoints
@@ -247,10 +249,10 @@ X-API-Key: imgcdn_sk_xxxxxxxxxxxxx
 
 ### Installation
 
-1. Download `imagecdn-optimizer.zip`
+1. Download `imgfast-optimizer.zip`
 2. Upload via WordPress Admin → Plugins → Add New
 3. Activate the plugin
-4. Go to Settings → ImageCDN
+4. Go to Settings → Imgfast
 5. Enter your API key
 
 ### Features
@@ -396,9 +398,9 @@ pnpm typecheck
 
 ## Support
 
-- Documentation: [docs.imagecdn.io](https://docs.imagecdn.io)
-- Email: support@imagecdn.io
-- Discord: [Join our community](https://discord.gg/imagecdn)
+- Documentation: [docs.imgfast.io](https://docs.imgfast.io)
+- Email: support@imgfast.io
+- Discord: [Join our community](https://discord.gg/imgfast)
 
 ## License
 
@@ -406,4 +408,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**ImageCDN** — *Fast images, everywhere.*
+**Imgfast** — *Fast images, everywhere.*

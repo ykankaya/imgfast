@@ -1,8 +1,8 @@
 <?php
 /**
- * Main ImageCDN Plugin Class
+ * Main Imgfast Plugin Class
  *
- * @package ImageCDN
+ * @package Imgfast
  */
 
 // Prevent direct access
@@ -13,40 +13,40 @@ if (!defined('ABSPATH')) {
 /**
  * Main plugin class - Singleton pattern
  */
-class ImageCDN {
+class Imgfast {
 
     /**
      * Single instance
      *
-     * @var ImageCDN|null
+     * @var Imgfast|null
      */
     private static $instance = null;
 
     /**
      * Settings manager
      *
-     * @var ImageCDN_Settings
+     * @var Imgfast_Settings
      */
     private $settings;
 
     /**
      * URL rewriter
      *
-     * @var ImageCDN_Rewriter
+     * @var Imgfast_Rewriter
      */
     private $rewriter;
 
     /**
      * Blocks handler
      *
-     * @var ImageCDN_Blocks
+     * @var Imgfast_Blocks
      */
     private $blocks;
 
     /**
      * Get singleton instance
      *
-     * @return ImageCDN
+     * @return Imgfast
      */
     public static function get_instance() {
         if (null === self::$instance) {
@@ -68,19 +68,19 @@ class ImageCDN {
      * Load required files
      */
     private function load_dependencies() {
-        require_once IMAGECDN_PLUGIN_DIR . 'includes/class-imagecdn-settings.php';
-        require_once IMAGECDN_PLUGIN_DIR . 'includes/class-imagecdn-rewriter.php';
-        require_once IMAGECDN_PLUGIN_DIR . 'includes/class-imagecdn-admin.php';
-        require_once IMAGECDN_PLUGIN_DIR . 'includes/class-imagecdn-blocks.php';
+        require_once IMGFAST_PLUGIN_DIR . 'includes/class-imgfast-settings.php';
+        require_once IMGFAST_PLUGIN_DIR . 'includes/class-imgfast-rewriter.php';
+        require_once IMGFAST_PLUGIN_DIR . 'includes/class-imgfast-admin.php';
+        require_once IMGFAST_PLUGIN_DIR . 'includes/class-imgfast-blocks.php';
     }
 
     /**
      * Initialize components
      */
     private function init_components() {
-        $this->settings = new ImageCDN_Settings();
-        $this->rewriter = new ImageCDN_Rewriter($this->settings);
-        $this->blocks = new ImageCDN_Blocks($this->settings);
+        $this->settings = new Imgfast_Settings();
+        $this->rewriter = new Imgfast_Rewriter($this->settings);
+        $this->blocks = new Imgfast_Blocks($this->settings);
     }
 
     /**
@@ -92,7 +92,7 @@ class ImageCDN {
 
         // Admin functionality
         if (is_admin()) {
-            new ImageCDN_Admin($this->settings);
+            new Imgfast_Admin($this->settings);
         }
 
         // Frontend URL rewriting
@@ -110,9 +110,9 @@ class ImageCDN {
      */
     public function load_textdomain() {
         load_plugin_textdomain(
-            'imagecdn-optimizer',
+            'imgfast-optimizer',
             false,
-            dirname(IMAGECDN_PLUGIN_BASENAME) . '/languages'
+            dirname(IMGFAST_PLUGIN_BASENAME) . '/languages'
         );
     }
 
@@ -129,7 +129,7 @@ class ImageCDN {
      * Register REST API routes
      */
     public function register_rest_routes() {
-        register_rest_route('imagecdn/v1', '/settings', [
+        register_rest_route('imgfast/v1', '/settings', [
             'methods' => 'GET',
             'callback' => [$this, 'rest_get_settings'],
             'permission_callback' => function () {
@@ -137,7 +137,7 @@ class ImageCDN {
             },
         ]);
 
-        register_rest_route('imagecdn/v1', '/transform-url', [
+        register_rest_route('imgfast/v1', '/transform-url', [
             'methods' => 'POST',
             'callback' => [$this, 'rest_transform_url'],
             'permission_callback' => '__return_true',
@@ -183,7 +183,7 @@ class ImageCDN {
     /**
      * Get settings instance
      *
-     * @return ImageCDN_Settings
+     * @return Imgfast_Settings
      */
     public function get_settings() {
         return $this->settings;
@@ -192,7 +192,7 @@ class ImageCDN {
     /**
      * Get rewriter instance
      *
-     * @return ImageCDN_Rewriter
+     * @return Imgfast_Rewriter
      */
     public function get_rewriter() {
         return $this->rewriter;

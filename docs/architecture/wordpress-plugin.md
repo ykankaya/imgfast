@@ -610,7 +610,7 @@ The plugin stores all settings in a single option:
 option_name: 'imagecdn_settings'
 option_value: {
     "enabled": true,
-    "public_key": "imgcdn_pk_xxxxx",
+    "public_key": "imgfast_pk_xxxxx",
     "cdn_url": "https://cdn.imagecdn.io",
     "default_quality": 80,
     "default_format": "auto",
