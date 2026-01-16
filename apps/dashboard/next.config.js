@@ -1,23 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   reactStrictMode: true,
-  transpilePackages: ['@imagecdn/shared-types'],
+  transpilePackages: ['@imgfast/shared-types'],
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.example.com',
+        hostname: '**.imgfast.io',
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/:path*`,
-      },
-    ];
-  },
+  trailingSlash: true,
 };
 
 module.exports = nextConfig;
