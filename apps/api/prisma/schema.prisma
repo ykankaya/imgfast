@@ -1,0 +1,133 @@
+// ImageCDN Database Schema
+// Using PostgreSQL for production
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Customer model
+model Customer {
+  id                   String    @id @default(cuid())
+  email                String    @unique
+  passwordHash         String?   @map("password_hash")
+
+  // API Keys
+  publicKey            String    @unique @map("public_key")
+  secretKeyHash        String    @map("secret_key_hash")
+
+  // Plan & Status
+  planId               String    @default("free") @map("plan_id")
+  status               String    @default("active") // active, suspended, cancelled
+
+  // Restrictions (JSON string for SQLite)
+  allowedDomains       String    @default("[]") @map("allowed_domains")
+  allowedReferrers     String    @default("[]") @map("allowed_referrers")
+
+  // Stripe Integration
+  stripeCustomerId     String?   @unique @map("stripe_customer_id")
+  stripeSubscriptionId String?   @map("stripe_subscription_id")
+
+  // Timestamps
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  apiKeys              ApiKey[]
+  images               Image[]
+  usageRecords         UsageRecord[]
+
+  @@map("customers")
+}
+
+// API Key model (for multiple keys per customer)
+model ApiKey {
+  id            String    @id @default(cuid())
+  customerId    String    @map("customer_id")
+  name          String    @default("Default")
+  publicKey     String    @unique @map("public_key")
+  secretKeyHash String    @map("secret_key_hash")
+  lastUsedAt    DateTime? @map("last_used_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  revokedAt     DateTime? @map("revoked_at")
+
+  customer      Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@map("api_keys")
+}
+
+// Image metadata model
+model Image {
+  id          String   @id @default(cuid())
+  customerId  String   @map("customer_id")
+  path        String
+  filename    String
+  contentType String   @map("content_type")
+  size        Int
+  width       Int?
+  height      Int?
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@unique([customerId, path])
+  @@map("images")
+}
+
+// Usage record model (synced from D1)
+model UsageRecord {
+  id              String   @id @default(cuid())
+  customerId      String   @map("customer_id")
+  publicKey       String   @map("public_key")
+  timestamp       DateTime
+  requestType     String   @map("request_type")
+  inputBytes      Int      @map("input_bytes")
+  outputBytes     Int      @map("output_bytes")
+  transformParams String?  @map("transform_params")
+  statusCode      Int      @map("status_code")
+  responseTime    Int      @map("response_time")
+  cacheStatus     String   @map("cache_status")
+  edgeLocation    String?  @map("edge_location")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  customer        Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId, timestamp])
+  @@map("usage_records")
+}
+
+// Monthly usage summary
+model UsageSummary {
+  id           String   @id @default(cuid())
+  customerId   String   @map("customer_id")
+  period       String   // YYYY-MM format
+  requests     Int      @default(0)
+  bandwidth    BigInt   @default(0)
+  cacheHitRate Float    @default(0) @map("cache_hit_rate")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@unique([customerId, period])
+  @@map("usage_summaries")
+}
+
+// Webhook event log
+model WebhookEvent {
+  id          String   @id @default(cuid())
+  source      String   // 'stripe', 'cloudflare', etc.
+  eventType   String   @map("event_type")
+  eventId     String   @unique @map("event_id")
+  payload     Json
+  processedAt DateTime? @map("processed_at")
+  error       String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([source, eventType])
+  @@map("webhook_events")
+}

@@ -1,0 +1,78 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "imagecdn/optimized-image",
+    "version": "1.0.0",
+    "title": "ImageCDN Image",
+    "category": "media",
+    "icon": "format-image",
+    "description": "Display an optimized image via ImageCDN with transformation options.",
+    "keywords": ["image", "cdn", "optimize", "webp", "responsive"],
+    "textdomain": "imagecdn-optimizer",
+    "attributes": {
+        "id": {
+            "type": "number"
+        },
+        "url": {
+            "type": "string",
+            "source": "attribute",
+            "selector": "img",
+            "attribute": "src"
+        },
+        "alt": {
+            "type": "string",
+            "source": "attribute",
+            "selector": "img",
+            "attribute": "alt",
+            "default": ""
+        },
+        "caption": {
+            "type": "string",
+            "source": "html",
+            "selector": "figcaption"
+        },
+        "width": {
+            "type": "number"
+        },
+        "height": {
+            "type": "number"
+        },
+        "quality": {
+            "type": "number",
+            "default": 80
+        },
+        "format": {
+            "type": "string",
+            "default": "auto",
+            "enum": ["auto", "webp", "avif", "jpeg", "png"]
+        },
+        "fit": {
+            "type": "string",
+            "default": "cover",
+            "enum": ["cover", "contain", "fill", "inside", "outside"]
+        },
+        "align": {
+            "type": "string"
+        },
+        "sizeSlug": {
+            "type": "string",
+            "default": "large"
+        }
+    },
+    "supports": {
+        "anchor": true,
+        "align": ["left", "center", "right", "wide", "full"],
+        "html": false,
+        "color": {
+            "background": false,
+            "text": false
+        },
+        "spacing": {
+            "margin": true,
+            "padding": true
+        }
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./editor.css",
+    "style": "file:./style.css"
+}

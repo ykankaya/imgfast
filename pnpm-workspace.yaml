@@ -1,0 +1,10 @@
+packages:
+  - apps/*
+  - packages/*
+  - plugins/*
+
+ignoredBuiltDependencies:
+  - '@nestjs/core'
+  - esbuild
+  - sharp
+  - workerd

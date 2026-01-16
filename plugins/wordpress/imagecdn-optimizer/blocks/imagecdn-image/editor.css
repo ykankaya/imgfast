@@ -1,0 +1,173 @@
+/**
+ * ImageCDN Block - Editor Styles
+ *
+ * @package ImageCDN
+ */
+
+/* Block wrapper */
+.wp-block-imagecdn-optimized-image {
+    position: relative;
+}
+
+/* Image wrapper */
+.wp-block-imagecdn-optimized-image .imagecdn-image-wrapper {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+}
+
+.wp-block-imagecdn-optimized-image .imagecdn-image-wrapper img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* CDN badge overlay in editor */
+.wp-block-imagecdn-optimized-image .imagecdn-image-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    pointer-events: none;
+}
+
+.wp-block-imagecdn-optimized-image .imagecdn-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #2271b1 0%, #135e96 100%);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Placeholder styling */
+.wp-block-imagecdn-optimized-image .components-placeholder {
+    min-height: 200px;
+}
+
+.wp-block-imagecdn-optimized-image .components-placeholder__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wp-block-imagecdn-optimized-image .components-placeholder__label .dashicon {
+    color: #2271b1;
+}
+
+/* Selected state */
+.wp-block-imagecdn-optimized-image.is-selected .imagecdn-image-wrapper {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
+/* Caption styling */
+.wp-block-imagecdn-optimized-image figcaption {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 13px;
+    color: #757575;
+}
+
+/* Alignment support */
+.wp-block-imagecdn-optimized-image.alignleft {
+    float: left;
+    margin-right: 1em;
+}
+
+.wp-block-imagecdn-optimized-image.alignright {
+    float: right;
+    margin-left: 1em;
+}
+
+.wp-block-imagecdn-optimized-image.aligncenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wp-block-imagecdn-optimized-image.alignwide,
+.wp-block-imagecdn-optimized-image.alignfull {
+    width: 100%;
+}
+
+.wp-block-imagecdn-optimized-image.alignwide img,
+.wp-block-imagecdn-optimized-image.alignfull img {
+    width: 100%;
+}
+
+/* Inspector controls enhancements */
+.imagecdn-inspector-preview {
+    margin-top: 16px;
+    padding: 12px;
+    background: #f6f7f7;
+    border-radius: 4px;
+}
+
+.imagecdn-inspector-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 2px;
+}
+
+.imagecdn-inspector-preview .preview-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #757575;
+}
+
+/* Quality indicator in inspector */
+.imagecdn-quality-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.imagecdn-quality-indicator .quality-bar {
+    flex: 1;
+    height: 4px;
+    background: #dcdcde;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.imagecdn-quality-indicator .quality-bar-fill {
+    height: 100%;
+    transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.imagecdn-quality-indicator .quality-bar-fill.low {
+    background: #d63638;
+}
+
+.imagecdn-quality-indicator .quality-bar-fill.medium {
+    background: #dba617;
+}
+
+.imagecdn-quality-indicator .quality-bar-fill.high {
+    background: #00a32a;
+}
+
+/* Responsive preview notice */
+.imagecdn-responsive-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+    background: #e7f5fe;
+    border-left: 4px solid #2271b1;
+    margin: 16px 0;
+    font-size: 12px;
+}
+
+.imagecdn-responsive-notice .dashicons {
+    color: #2271b1;
+    flex-shrink: 0;
+}

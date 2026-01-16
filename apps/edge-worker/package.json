@@ -1,0 +1,27 @@
+{
+  "name": "@imagecdn/edge-worker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloudflare Worker for image transformation and CDN delivery",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run --outdir=dist",
+    "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:production": "wrangler deploy --env production",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@imagecdn/shared-types": "workspace:*",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241205.0",
+    "typescript": "^5.3.0",
+    "vitest": "^2.1.0",
+    "wrangler": "^3.99.0"
+  }
+}

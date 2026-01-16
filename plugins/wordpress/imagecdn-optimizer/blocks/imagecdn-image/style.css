@@ -1,0 +1,92 @@
+/**
+ * ImageCDN Block - Frontend Styles
+ *
+ * @package ImageCDN
+ */
+
+/* Block wrapper */
+.wp-block-imagecdn-optimized-image {
+    margin: 0 0 1em 0;
+}
+
+/* Figure element */
+.wp-block-imagecdn-optimized-image figure {
+    margin: 0;
+}
+
+/* Image styling */
+.wp-block-imagecdn-optimized-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Caption */
+.wp-block-imagecdn-optimized-image figcaption {
+    margin-top: 0.5em;
+    text-align: center;
+    font-size: 0.875em;
+    color: #666;
+}
+
+/* Alignment */
+.wp-block-imagecdn-optimized-image.alignleft {
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+}
+
+.wp-block-imagecdn-optimized-image.alignright {
+    float: right;
+    margin-left: 1em;
+    margin-bottom: 0.5em;
+}
+
+.wp-block-imagecdn-optimized-image.aligncenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wp-block-imagecdn-optimized-image.alignwide {
+    max-width: var(--wp--style--global--wide-size, 1200px);
+    width: 100%;
+}
+
+.wp-block-imagecdn-optimized-image.alignfull {
+    max-width: none;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+.wp-block-imagecdn-optimized-image.alignfull img {
+    width: 100%;
+}
+
+/* Responsive images */
+@media (max-width: 600px) {
+    .wp-block-imagecdn-optimized-image.alignleft,
+    .wp-block-imagecdn-optimized-image.alignright {
+        float: none;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+/* Loading state */
+.wp-block-imagecdn-optimized-image img[loading="lazy"] {
+    background: #f0f0f1;
+}
+
+/* Smooth load transition */
+.wp-block-imagecdn-optimized-image img {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.wp-block-imagecdn-optimized-image img.loading {
+    opacity: 0;
+}

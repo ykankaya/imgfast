@@ -1,0 +1,11 @@
+# Cloudflare Worker Development Variables
+# Copy this to .dev.vars and fill in your values
+
+# Internal API authentication
+API_SECRET_KEY=your-internal-api-secret
+
+# Backend API URL
+BACKEND_API_URL=http://localhost:3001
+
+# URL Signing Secret (must match backend)
+URL_SIGNING_SECRET=your-url-signing-secret

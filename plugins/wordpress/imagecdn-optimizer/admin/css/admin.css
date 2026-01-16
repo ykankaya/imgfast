@@ -1,0 +1,232 @@
+/**
+ * ImageCDN Admin Styles
+ *
+ * @package ImageCDN
+ */
+
+/* Settings Page Layout */
+.imagecdn-settings {
+    max-width: 1200px;
+}
+
+.imagecdn-settings h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.imagecdn-settings h1 .dashicons {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    color: #2271b1;
+}
+
+/* Navigation Tabs */
+.imagecdn-settings .nav-tab-wrapper {
+    margin-bottom: 20px;
+}
+
+.imagecdn-settings .nav-tab {
+    padding: 10px 20px;
+}
+
+/* Form Tables */
+.imagecdn-settings .form-table th {
+    width: 200px;
+    padding: 20px 10px 20px 0;
+}
+
+.imagecdn-settings .form-table td {
+    padding: 15px 10px;
+}
+
+.imagecdn-settings .form-table input[type="text"],
+.imagecdn-settings .form-table input[type="url"],
+.imagecdn-settings .form-table input[type="number"] {
+    padding: 8px 12px;
+}
+
+.imagecdn-settings .form-table textarea {
+    padding: 8px 12px;
+}
+
+.imagecdn-settings .form-table .description {
+    margin-top: 8px;
+    color: #646970;
+}
+
+/* Status Cards */
+.imagecdn-status-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.imagecdn-status-card {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.imagecdn-status-card h3 {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    color: #1d2327;
+    border-bottom: 1px solid #f0f0f1;
+    padding-bottom: 10px;
+}
+
+.imagecdn-status-card code {
+    display: block;
+    background: #f6f7f7;
+    padding: 10px;
+    border-radius: 4px;
+    word-break: break-all;
+    font-size: 12px;
+}
+
+.imagecdn-status-card ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.imagecdn-status-card li {
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.imagecdn-status-card li:last-child {
+    border-bottom: none;
+}
+
+/* Status Indicators */
+.status-indicator {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.status-active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-inactive {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Test Connection Button */
+#imagecdn-test-connection {
+    margin-right: 10px;
+}
+
+#imagecdn-test-result {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#imagecdn-test-result.success {
+    color: #00a32a;
+}
+
+#imagecdn-test-result.error {
+    color: #d63638;
+}
+
+#imagecdn-test-result .spinner {
+    float: none;
+    margin: 0;
+}
+
+/* Sample URL Table */
+.imagecdn-settings .widefat {
+    margin: 15px 0;
+}
+
+.imagecdn-settings .widefat th {
+    width: 150px;
+    text-align: left;
+    padding: 12px;
+    background: #f6f7f7;
+}
+
+.imagecdn-settings .widefat td {
+    padding: 12px;
+}
+
+.imagecdn-settings .widefat code {
+    background: none;
+    padding: 0;
+    word-break: break-all;
+}
+
+/* Notices */
+.imagecdn-settings .notice {
+    margin: 15px 0;
+}
+
+/* Input validation states */
+.imagecdn-settings input:invalid {
+    border-color: #d63638;
+}
+
+.imagecdn-settings input:valid:not(:placeholder-shown) {
+    border-color: #00a32a;
+}
+
+/* API Key field styling */
+#imagecdn_public_key {
+    font-family: monospace;
+    letter-spacing: 0.5px;
+}
+
+/* Quality slider enhancement */
+#imagecdn_quality {
+    width: 80px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .imagecdn-settings .form-table th {
+        width: auto;
+        padding: 15px 0 5px 0;
+    }
+
+    .imagecdn-settings .form-table td {
+        padding: 5px 0 15px 0;
+    }
+
+    .imagecdn-status-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .imagecdn-settings .widefat th {
+        width: 100px;
+    }
+}
+
+/* Dark mode support (WordPress 5.7+) */
+@media (prefers-color-scheme: dark) {
+    body.admin-color-modern .imagecdn-status-card {
+        background: #1d2327;
+        border-color: #3c434a;
+    }
+
+    body.admin-color-modern .imagecdn-status-card h3 {
+        color: #c3c4c7;
+        border-color: #3c434a;
+    }
+
+    body.admin-color-modern .imagecdn-status-card code {
+        background: #2c3338;
+        color: #c3c4c7;
+    }
+}

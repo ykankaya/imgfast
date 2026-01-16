@@ -1,0 +1,64 @@
+name = "imagecdn-edge"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Development
+[env.development]
+vars = { ENVIRONMENT = "development", MAX_IMAGE_WIDTH = "4096", MAX_IMAGE_HEIGHT = "4096", MAX_FILE_SIZE_MB = "50", DEFAULT_QUALITY = "80", CACHE_TTL_SECONDS = "31536000" }
+
+[[env.development.r2_buckets]]
+binding = "IMAGES_BUCKET"
+bucket_name = "imagecdn-images-preview"
+
+[[env.development.kv_namespaces]]
+binding = "CACHE_KV"
+id = "dev-kv-namespace-id"
+
+[[env.development.d1_databases]]
+binding = "USAGE_DB"
+database_name = "imagecdn-usage"
+database_id = "dev-d1-database-id"
+
+# Staging
+[env.staging]
+vars = { ENVIRONMENT = "staging" }
+routes = [
+  { pattern = "staging-cdn.example.com/*", zone_name = "example.com" }
+]
+
+# Production
+[env.production]
+vars = { ENVIRONMENT = "production" }
+routes = [
+  { pattern = "cdn.example.com/*", zone_name = "example.com" }
+]
+
+# R2 Bucket bindings
+[[r2_buckets]]
+binding = "IMAGES_BUCKET"
+bucket_name = "imagecdn-images"
+preview_bucket_name = "imagecdn-images-preview"
+
+# KV Namespace for caching metadata and rate limiting
+[[kv_namespaces]]
+binding = "CACHE_KV"
+id = "your-kv-namespace-id"
+preview_id = "your-preview-kv-namespace-id"
+
+# D1 Database for usage tracking (async)
+[[d1_databases]]
+binding = "USAGE_DB"
+database_name = "imagecdn-usage"
+database_id = "your-d1-database-id"
+
+# Analytics Engine for real-time metrics
+# [[analytics_engine_datasets]]
+# binding = "ANALYTICS"
+
+[vars]
+MAX_IMAGE_WIDTH = "4096"
+MAX_IMAGE_HEIGHT = "4096"
+MAX_FILE_SIZE_MB = "50"
+DEFAULT_QUALITY = "80"
+CACHE_TTL_SECONDS = "31536000"
