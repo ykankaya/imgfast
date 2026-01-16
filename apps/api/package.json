@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Backend API for Imgfast SaaS platform",
+  "packageManager": "pnpm@10.28.0",
   "main": "dist/main.js",
   "scripts": {
     "prebuild": "rimraf dist",
