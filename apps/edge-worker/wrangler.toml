@@ -43,14 +43,13 @@ preview_bucket_name = "imgfast-images-preview"
 # KV Namespace for caching metadata and rate limiting
 [[kv_namespaces]]
 binding = "CACHE_KV"
-id = "your-kv-namespace-id"
-preview_id = "your-preview-kv-namespace-id"
+id = "ab29dbb62df849759ba652d4144ba2b6"
 
 # D1 Database for usage tracking (async)
 [[d1_databases]]
 binding = "USAGE_DB"
 database_name = "imgfast-usage"
-database_id = "your-d1-database-id"
+database_id = "eb96a086-b790-4093-988f-1a6fa857dec7"
 
 # Analytics Engine for real-time metrics
 # [[analytics_engine_datasets]]
